@@ -5,15 +5,33 @@ android {
     defaultConfig {
         applicationId "com.alcidae.smarthome"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 15
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            storeFile file('DanaleKey.keystore')
+            storePassword 'danale'
+            keyAlias '深圳市大拿科技有限公司'
+            keyPassword 'danale'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }
@@ -25,4 +43,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+
+    //added
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation files('libs/app_sdk_data.jar')
+    implementation files('libs/bsh-core-2.0b4.jar')
+    implementation files('libs/jackson-annotations-2.0.2.jar')
+    implementation files('libs/jackson-core-2.0.2.jar')
+    implementation files('libs/jackson-databind-2.0.2.jar')
+    implementation files('libs/kksdk_v152_full_pro.jar')
 }

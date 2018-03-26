@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ir_bg_grey"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/id_ir_back_iv"
+            style="@style/TitleBackImage"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize" />
+
+        <com.alcidae.smarthome.ir.widget.MyTextView
+            android:id="@+id/id_activity_ir_match_test_title_tv"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ir_bg_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/shape_ir_match_round">
+
+            <ImageView
+                android:id="@+id/id_activity_ir_match_test_btn_iv"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/selector_power_switch" />
+        </RelativeLayout>
+
+        <com.alcidae.smarthome.ir.widget.MyTextView
+            android:id="@+id/id_activity_ir_match_test_btn_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="@string/power"
+            android:textColor="@color/color_0acc7a"
+            android:textSize="17sp" />
+
+        <com.alcidae.smarthome.ir.widget.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
+            android:layout_marginTop="35dp"
+            android:gravity="center"
+            android:text="@string/ir_match_hint"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/id_activity_ir_match_test_no_btn"
+                android:layout_width="143dp"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/selector_button_round"
+                android:text="@string/no" />
+
+            <Button
+                android:id="@+id/id_activity_ir_match_test_yes_btn"
+                android:layout_width="143dp"
+                android:layout_height="44dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="50dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/selector_button_round"
+                android:text="@string/yes" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

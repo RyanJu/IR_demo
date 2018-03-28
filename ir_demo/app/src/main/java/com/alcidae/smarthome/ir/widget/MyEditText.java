@@ -1,6 +1,7 @@
 package com.alcidae.smarthome.ir.widget;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
@@ -16,20 +17,25 @@ import android.widget.EditText;
  * @updateTime 2018/3/27 18:32
  */
 
-public class MyEditText extends EditText {
+public class MyEditText extends android.support.v7.widget.AppCompatEditText {
     public MyEditText(Context context) {
         super(context);
+        initTypeFace();
     }
 
     public MyEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initTypeFace();
     }
 
     public MyEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initTypeFace();
     }
 
-    public MyEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    private void initTypeFace() {
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font/pingfang_medium.ttf");
+        setTypeface(tf);
     }
+
 }

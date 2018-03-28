@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.alcidae.smarthome.R;
+import com.alcidae.smarthome.ir.data.db.DbUtil;
 import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.ir.Device;
@@ -15,6 +16,7 @@ import net.tsz.afinal.FinalDb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Create By zhurongkun
@@ -82,19 +84,11 @@ public class IRUtils {
     }
 
     public static IRBean saveMatchedRemoteBean(int frequency, BrandList.Brand brand, int deviceType, int remoteId, String accStateString, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
-        IRBean irBean = new IRBean();
-        irBean.setFrequency(frequency);
-        irBean.setBrandId(brand.brandId);
-        irBean.setBrandName(brand.ename);
-        irBean.setDeviceType(deviceType);
-        irBean.setRemoteId(remoteId);
-        irBean.setAccState(accStateString);
-        irBean.setCustomName(customName);
-        irBean.setExts(exts);
-        irBean.setKeys(keys);
-        FinalDb finalDb = FinalDb.create(sContext);
-        finalDb.save(irBean);
-        return irBean;
+       return DbUtil.saveMatchedRemoteBean(sContext,frequency,brand,deviceType,remoteId,accStateString,customName,exts,keys);
+    }
+
+    public static List<IRBean> getIrBeans(){
+        return DbUtil.getIrBeans(sContext);
     }
 
 }

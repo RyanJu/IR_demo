@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFromDb() {
-        List<IRBean> all = FinalDb.create(this)
-                .findAll(IRBean.class);
+        List<IRBean> all = IRUtils.getIrBeans();
         mBeans.addAll(all);
         ((BaseAdapter) mListView.getAdapter()).notifyDataSetChanged();
     }

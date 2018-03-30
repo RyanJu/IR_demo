@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.EventBus;
  * @updateTime 2018/3/27 19:31
  */
 
-public class AcDialog extends BaseFloatDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
+public class AcRemoteControllerDialog extends BaseFloatDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
 
     private final IRBean mIrBean;
     private View mCloseIv;
@@ -65,7 +65,7 @@ public class AcDialog extends BaseFloatDialog implements View.OnClickListener, D
     //load from server
     private IrData mIrData;
 
-    public AcDialog(@NonNull Context context, IRBean irBean) {
+    public AcRemoteControllerDialog(@NonNull Context context, IRBean irBean) {
         super(context);
         this.mIrBean = irBean;
         mAcManger = new KKACManagerV2();

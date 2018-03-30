@@ -5,7 +5,6 @@ import android.content.Context;
 import android.hardware.ConsumerIrManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +19,7 @@ import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.alcidae.smarthome.ir.ui.activity.IRChooseDeviceActivity;
-import com.alcidae.smarthome.ir.ui.dialog.AcDialog;
 import com.hzy.tvmao.utils.LogUtil;
-
-import net.tsz.afinal.FinalDb;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //对接实现，首页点击保存的遥控图标，显示遥控界面
-                new AcDialog(MainActivity.this, mBeans.get(position)).show();
+                IRUtils.newRemoteDialog(MainActivity.this,mBeans.get(position)).show();
             }
         });
         loadFromDb();

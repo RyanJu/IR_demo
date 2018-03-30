@@ -1,18 +1,19 @@
 package com.alcidae.smarthome.ir;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.db.DbUtil;
 import com.alcidae.smarthome.ir.data.db.IRBean;
+import com.alcidae.smarthome.ir.ui.dialog.AcRemoteControllerDialog;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.IrData;
-
-import net.tsz.afinal.FinalDb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,11 +36,41 @@ public class IRUtils {
     private static final String irDeviceId = "1";
     private static Context sContext;
 
+    private static String sProvince = "广东省";
+    private static String sCity = "深圳市";
+    private static String sArea = "南山区";
+
+
     public static void init(Context context) {
         sContext = context.getApplicationContext();
         boolean result = KookongSDK.init(context.getApplicationContext(), key, irDeviceId);
         LogUtil.d("Verify result is " + result);
         KookongSDK.setDebugMode(true);
+    }
+
+    /**
+     * 需由对接实现，填入当前位置，供机顶盒匹配使用
+     *
+     * @param province
+     * @param city
+     * @param area
+     */
+    public static void setArea(String province, String city, String area) {
+        sProvince = province;
+        sCity = city;
+        sArea = area;
+    }
+
+    public static String getProvince() {
+        return sProvince;
+    }
+
+    public static String getCity() {
+        return sCity;
+    }
+
+    public static String getArea() {
+        return sArea;
     }
 
     public static String deviceTypeToString(Context context, int deviceType) {
@@ -84,11 +115,24 @@ public class IRUtils {
     }
 
     public static IRBean saveMatchedRemoteBean(int frequency, BrandList.Brand brand, int deviceType, int remoteId, String accStateString, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
-       return DbUtil.saveMatchedRemoteBean(sContext,frequency,brand,deviceType,remoteId,accStateString,customName,exts,keys);
+        return DbUtil.saveMatchedRemoteBean(sContext, frequency, brand, deviceType, remoteId, accStateString, customName, exts, keys);
     }
 
-    public static List<IRBean> getIrBeans(){
+    public static List<IRBean> getIrBeans() {
         return DbUtil.getIrBeans(sContext);
+    }
+
+    public static Dialog newRemoteDialog(@NonNull Context context, @NonNull IRBean bean) throws NullPointerException {
+        if (bean == null) {
+            return null;
+        }
+
+        if (bean.getDeviceType() == Device.AC) {
+            return new AcRemoteControllerDialog(context, bean);
+        } else {
+            return new Dialog(context);
+        }
+
     }
 
 }

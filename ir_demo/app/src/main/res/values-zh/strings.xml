@@ -14,7 +14,7 @@
     <string name="ir_choose_brand">选择品牌</string>
     <string name="search_for_your_brand">搜索品牌</string>
     <string name="ir_common_brands">常用品牌</string>
-    <string name="ir_match_hint">1.Please let the controlled electric appliance appear in the video screen, and click the button to send the infrared signal.\n\n2. Choose whether or not according to the equipment.</string>
+    <string name="ir_match_hint">1.请让所控制电器出现在遥控画面中，并点击按钮发送遥控数据.\n\n2. 根据电器响应结果选择是或者否.</string>
     <string name="no">无效</string>
     <string name="yes">有效</string>
     <string name="power">开关</string>
@@ -25,10 +25,15 @@
     <string name="ir_cancel">取消</string>
     <string name="ir_ok">确定</string>
     <string name="add_unsuccessful">添加失败</string>
-    <string name="ir_dialog_add_unsuccessful_hint">The possible reason is: Please rotate the camera first to ensure that the added electrical appliances can be seen in the video interface.</string>
+    <string name="ir_dialog_add_unsuccessful_hint">未添加成功？可能有以下原因：请先旋转摄像头，确保所控制电器在遥控画面中。</string>
     <string name="ir_speed">风速</string>
     <string name="ir_wind_direction">风向</string>
     <string name="ir_swing">扫风</string>
     <string name="ir_timing">定时</string>
-    <string name="ir_error_network">Net work problems.</string>
+    <string name="ir_error_network">网络错误</string>
+    <string name="ir_choose_operator">运营商</string>
+    <string name="search_for_your_operator">搜索运营商</string>
+    <string name="ir_error_area">无法定位您所在地区</string>
+    <string name="ir_volume">音量</string>
+    <string name="ir_temp">温度</string>
 </resources>

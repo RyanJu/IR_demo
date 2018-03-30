@@ -1,6 +1,7 @@
 package com.alcidae.smarthome.ir.data.db;
 
 import com.kookong.app.data.IrData;
+import com.kookong.app.data.SpList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,10 @@ import java.util.HashMap;
  */
 
 public class IRBean {
+    public static final int NORMAL_STB = 0;
+    public static final int IPTV = 1;
+
+
     //database id,auto increase
     int id;
     int frequency;
@@ -30,6 +35,12 @@ public class IRBean {
     HashMap<Integer, String> exts;
     ArrayList<IrData.IrKey> keys;
     String accState;
+
+    //stb operator id
+    int spId;
+
+    //stb type : 0 normal stb,1 iptv
+    int spType;
 
     public ArrayList<IrData.IrKey> getKeys() {
         return keys;

@@ -32,6 +32,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ir.ui.activity.IRMatchTestActivity" />
         <activity android:name=".ir.ui.activity.IRMatchTestAcActivity" />
+        <activity android:name=".ir.ui.activity.match.IRMatchAcActivity" />
+        <activity android:name=".ir.ui.activity.IRChooseOperatorActivity" />
+        <activity android:name=".ir.ui.activity.match.IRMatchStbActivity" />
     </application>
 
 </manifest>

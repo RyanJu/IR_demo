@@ -37,14 +37,57 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/shape_ir_match_round">
 
-            <ImageView
+            <com.alcidae.smarthome.ir.widget.MyVibrateImageView
                 android:id="@+id/id_activity_ir_match_test_btn_iv"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_centerInParent="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/selector_power_switch" />
+                android:src="@drawable/selector_power_switch"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/id_activity_ir_match_test_volume_layout"
+                android:layout_width="58dp"
+                android:layout_height="118dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ir_sound_default" />
+
+                <com.alcidae.smarthome.ir.widget.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
+                    android:text="@string/ir_volume"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                        android:id="@+id/id_activity_ir_match_test_volume_up_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                        android:id="@+id/id_activity_ir_match_test_volume_down_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
         <com.alcidae.smarthome.ir.widget.MyTextView
@@ -73,7 +116,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
+            <com.alcidae.smarthome.ir.widget.MyButton
                 android:id="@+id/id_activity_ir_match_test_no_btn"
                 android:layout_width="143dp"
                 android:layout_height="44dp"
@@ -83,7 +126,7 @@
                 android:background="@drawable/selector_button_round"
                 android:text="@string/no" />
 
-            <Button
+            <com.alcidae.smarthome.ir.widget.MyButton
                 android:id="@+id/id_activity_ir_match_test_yes_btn"
                 android:layout_width="143dp"
                 android:layout_height="44dp"

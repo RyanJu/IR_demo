@@ -31,5 +31,10 @@
     <string name="ir_swing">Swing</string>
     <string name="ir_timing">Timing</string>
     <string name="ir_error_network">Net work problems.</string>
+    <string name="ir_choose_operator">Operators</string>
+    <string name="search_for_your_operator">Search operator</string>
+    <string name="ir_error_area">Can\'t locate your area.</string>
+    <string name="ir_volume">Volume</string>
+    <string name="ir_temp">Temp.</string>
 
 </resources>

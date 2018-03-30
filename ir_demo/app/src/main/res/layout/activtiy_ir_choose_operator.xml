@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ir_bg_grey"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/id_ir_back_iv"
+            style="@style/TitleBackImage"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize" />
+
+        <com.alcidae.smarthome.ir.widget.MyTextView
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/ir_choose_operator" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:background="@color/color_f8f8f8"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/id_dialog_choose_operator_search_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_search"
+            android:hint="@string/search_for_your_operator"
+            android:paddingLeft="47dp"
+            android:textColor="@color/color_777777"
+            android:textColorHint="@color/color_dddddd"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ir_search" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_dialog_choose_operator_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ir_bg_white"
+        />
+</LinearLayout>

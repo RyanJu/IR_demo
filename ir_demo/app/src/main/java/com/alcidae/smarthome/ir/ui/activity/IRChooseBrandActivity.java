@@ -16,11 +16,13 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
+import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.utils.LogUtil;
+import com.kookong.app.data.BrandHuaWeiList;
 import com.kookong.app.data.BrandList;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +47,7 @@ import java.util.List;
  */
 
 public class IRChooseBrandActivity extends Activity implements View.OnClickListener {
-    private int deviceType;
+    private int mDeviceType;
     private RecyclerView mBrandRv;
     private EditText mSearchEt;
 
@@ -79,19 +81,18 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
     }
 
     private void initData() {
-        deviceType = getIntent().getIntExtra("deviceType", -1);
+        mDeviceType = getIntent().getIntExtra("deviceType", -1);
     }
 
     private void loadBrands() {
         mItems = new ArrayList<>();
-        mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
-        addCommonBrands();
 
-        KookongSDK.getBrandListFromNet(deviceType, new IRequestResult<BrandList>() {
+        KookongSDK.getBrandListFromNet(mDeviceType, new IRequestResult<BrandList>() {
             @Override
             public void onSuccess(String s, BrandList brandList) {
                 LogUtil.i("getBrandListFromNet succ: size-->" + brandList.brandList.size());
-                addBrands(brandList.brandList);
+
+                addBrands(brandList.hotCount, brandList.brandList);
                 refreshItems();
             }
 
@@ -116,22 +117,24 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<BrandList.Brand>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, BrandList.Brand data) {
-                IRMatchTestActivity.launch(IRChooseBrandActivity.this,
-                        100, deviceType, data);
+                IRMatchBaseActivity.launch(IRChooseBrandActivity.this,
+                        100, mDeviceType, data, null);
             }
         });
     }
 
-    private void addBrands(List<BrandList.Brand> brandList) {
+    private void addBrands(int hotCount, List<BrandList.Brand> brandList) {
         if (mItems == null || brandList == null)
             return;
+
+        addCommonBrands(hotCount, brandList);
 
         Collections.sort(brandList, new Comparator<BrandList.Brand>() {
             @Override
             public int compare(BrandList.Brand o1, BrandList.Brand o2) {
-                char s1 = o1.initial.charAt(0);
-                char s2 = o2.initial.charAt(0);
-                return s1 - s2;
+                String s1 = o1.ename == null ? "" : o1.ename;
+                String s2 = o2.ename == null ? "" : o2.ename;
+                return s1.compareToIgnoreCase(s2);
             }
         });
 
@@ -145,66 +148,20 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         }
     }
 
-    private void addCommonBrands() {
-        if (mItems == null)
-            return;
+    private void addCommonBrands(int hotCount, List<BrandList.Brand> brandList) {
+        if (mItems == null) {
+            mItems = new ArrayList<>();
+        }
 
-        switch (deviceType) {
-            case Device.AC:
-                addCommonACBrands();
-                break;
+
+        mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
+
+        for (int i = 0; i < hotCount; i++) {
+            mItems.add(new ItemBean(brandList.get(i)));
         }
 
     }
 
-    private void addCommonACBrands() {
-        /**
-         * {"brandId":97,"initial":"G","cname":"Gree","ename":"Gree","pinyin":"Gree"},
-         * {"brandId":182,"initial":"M","cname":"Midea","ename":"Midea","pinyin":"Midea"},
-         * {"brandId":37,"initial":"H","cname":"Haier","ename":"Haier","pinyin":"Haier"},
-         * {"brandId":192,"initial":"A","cname":"Aux","ename":"Aux","pinyin":"Aux"},
-         * {"brandId":197,"initial":"C","cname":"Chigo","ename":"Chigo","pinyin":"Chigo"}
-         */
-        BrandList.Brand gree = new BrandList.Brand();
-        gree.brandId = 97;
-        gree.initial = "G";
-        gree.cname = "Gree";
-        gree.ename = "Gree";
-        gree.pinyin = "Gree";
-        mItems.add(new ItemBean(gree));
-
-        BrandList.Brand midea = new BrandList.Brand();
-        midea.brandId = 182;
-        midea.initial = "M";
-        midea.cname = "Midea";
-        midea.ename = "Midea";
-        midea.pinyin = "Midea";
-        mItems.add(new ItemBean(midea));
-
-        BrandList.Brand haier = new BrandList.Brand();
-        haier.brandId = 37;
-        haier.initial = "H";
-        haier.cname = "Haier";
-        haier.ename = "Haier";
-        haier.pinyin = "Haier";
-        mItems.add(new ItemBean(haier));
-
-        BrandList.Brand aux = new BrandList.Brand();
-        aux.brandId = 192;
-        aux.initial = "A";
-        aux.cname = "Aux";
-        aux.ename = "Aux";
-        aux.pinyin = "Aux";
-        mItems.add(new ItemBean(aux));
-
-        BrandList.Brand chigo = new BrandList.Brand();
-        chigo.brandId = 197;
-        chigo.initial = "C";
-        chigo.cname = "Chigo";
-        chigo.ename = "Chigo";
-        chigo.pinyin = "Chigo";
-        mItems.add(new ItemBean(chigo));
-    }
 
     @Override
     public void onClick(View v) {

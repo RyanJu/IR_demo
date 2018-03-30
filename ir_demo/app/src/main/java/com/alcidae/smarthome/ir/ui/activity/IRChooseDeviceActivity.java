@@ -43,6 +43,7 @@ public class IRChooseDeviceActivity extends Activity implements View.OnClickList
 
 
     private static final int REQUEST_CODE_CHOOSE_BRAND = 1001;
+    private static final int REQUEST_CODE_CHOOSE_OPRATOR = 1002;
     private RecyclerView mTypesRv;
 
     private List<ItemBean> mDeviceItems;
@@ -78,8 +79,15 @@ public class IRChooseDeviceActivity extends Activity implements View.OnClickList
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<ItemBean>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, ItemBean data) {
-                IRChooseBrandActivity.launch(IRChooseDeviceActivity.this,
-                        data.deviceType, REQUEST_CODE_CHOOSE_BRAND);
+
+                if (data.deviceType == Device.STB) {
+                    //机顶盒按运营商来区分
+                    IRChooseOperatorActivity.launch(IRChooseDeviceActivity.this, data.deviceType, REQUEST_CODE_CHOOSE_OPRATOR);
+
+                } else {
+                    IRChooseBrandActivity.launch(IRChooseDeviceActivity.this,
+                            data.deviceType, REQUEST_CODE_CHOOSE_BRAND);
+                }
             }
         });
     }

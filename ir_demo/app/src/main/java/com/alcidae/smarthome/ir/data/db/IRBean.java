@@ -42,6 +42,11 @@ public class IRBean {
     //stb type : 0 normal stb,1 iptv
     int spType;
 
+    //IPTV运营商下有多个合作公司生产的iptv盒子，bid表示该公司品牌盒子的id
+    int bid;
+
+
+
     public ArrayList<IrData.IrKey> getKeys() {
         return keys;
     }

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
+import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
+import com.alcidae.smarthome.ir.ui.activity.match.IRMatchStbActivity;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
@@ -100,7 +102,7 @@ public class IRChooseOperatorActivity extends Activity {
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<SpList.Sp>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, SpList.Sp data) {
-
+                IRMatchBaseActivity.launchByStb(IRChooseOperatorActivity.this, 666, mDeviceType, mAreaId, data);
             }
         });
 

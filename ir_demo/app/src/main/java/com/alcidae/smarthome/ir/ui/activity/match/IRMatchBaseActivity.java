@@ -35,8 +35,28 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected TextView mTestTv;
     protected View mVolumeLayout;
     protected View mMatchBtn;
+    protected int mAreaid;
+    protected SpList.Sp mSp;
 
-    public static void launch(Activity activity, int requestCode, int deviceType, BrandList.Brand brand, SpList.Sp sp) {
+    public static void launchCommon(Activity activity, int requestCode, int deviceType, BrandList.Brand brand) {
+        launch(activity, requestCode, deviceType, brand, 0, null);
+    }
+
+    public static void launchByStb(Activity activity, int requestCode, int deviceType, int areaId, @Nullable SpList.Sp sp) {
+        launch(activity, requestCode, deviceType, null, areaId, sp);
+    }
+
+//    public static void launchByIPTV(Activity activity,int requestCode,int deice)
+
+    /**
+     * @param activity
+     * @param requestCode
+     * @param deviceType
+     * @param brand       机顶盒填null
+     * @param areaId      机顶盒必填，其他无效
+     * @param sp          机顶盒必填，其他填null
+     */
+    public static void launch(Activity activity, int requestCode, int deviceType, @Nullable BrandList.Brand brand, int areaId, @Nullable SpList.Sp sp) {
 
         Intent intent = new Intent();
         Class targetClz = null;
@@ -55,6 +75,7 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
             intent.setClass(activity, targetClz);
             intent.putExtra("deviceType", deviceType);
             intent.putExtra("brand", brand);
+            intent.putExtra("areaId", areaId);
             intent.putExtra("sp", sp);
             activity.startActivityForResult(intent, requestCode);
         }
@@ -73,6 +94,8 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         Intent intent = getIntent();
         mDeviceType = intent.getIntExtra("deviceType", -1);
         mBrand = (BrandList.Brand) intent.getSerializableExtra("brand");
+        mAreaid = intent.getIntExtra("areaId", 0);
+        mSp = (SpList.Sp) intent.getSerializableExtra("sp");
     }
 
     private void initViews() {
@@ -115,11 +138,11 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         }
     }
 
-    protected void showMatchVolume(boolean show){
-        if (show){
+    protected void showMatchVolume(boolean show) {
+        if (show) {
             mVolumeLayout.setVisibility(View.VISIBLE);
             mTestIv.setVisibility(View.GONE);
-        }else{
+        } else {
             mVolumeLayout.setVisibility(View.GONE);
             mTestIv.setVisibility(View.VISIBLE);
         }

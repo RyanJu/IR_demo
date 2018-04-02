@@ -24,6 +24,7 @@ import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.BrandHuaWeiList;
 import com.kookong.app.data.BrandList;
+import com.kookong.app.data.StbList;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,6 +59,8 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         intent.putExtra("deviceType", deviceType);
         activity.startActivityForResult(intent, requestCode);
     }
+
+//    public static void launchByChooseIPTVBrand(Activity activity, StbList stbList)
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,8 +120,8 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<BrandList.Brand>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, BrandList.Brand data) {
-                IRMatchBaseActivity.launch(IRChooseBrandActivity.this,
-                        100, mDeviceType, data, null);
+                IRMatchBaseActivity.launchCommon(IRChooseBrandActivity.this,
+                        100, mDeviceType, data);
             }
         });
     }

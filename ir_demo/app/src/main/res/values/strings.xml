@@ -31,10 +31,12 @@
     <string name="ir_swing">Swing</string>
     <string name="ir_timing">Timing</string>
     <string name="ir_error_network">Net work problems.</string>
-    <string name="ir_choose_operator">Operators</string>
+    <string name="ir_choose_operator">Choose Operator</string>
     <string name="search_for_your_operator">Search operator</string>
     <string name="ir_error_area">Can\'t locate your area.</string>
     <string name="ir_volume">Volume</string>
     <string name="ir_temp">Temp.</string>
+    <string name="manual_choose">Set Location</string>
+    <string name="ir_stb_hint">* Remote control of Set top box is provided by operators</string>
 
 </resources>

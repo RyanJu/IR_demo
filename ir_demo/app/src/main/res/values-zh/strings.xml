@@ -31,9 +31,11 @@
     <string name="ir_swing">扫风</string>
     <string name="ir_timing">定时</string>
     <string name="ir_error_network">网络错误</string>
-    <string name="ir_choose_operator">运营商</string>
+    <string name="ir_choose_operator">选择电视的运营商</string>
     <string name="search_for_your_operator">搜索运营商</string>
     <string name="ir_error_area">无法定位您所在地区</string>
     <string name="ir_volume">音量</string>
     <string name="ir_temp">温度</string>
+    <string name="manual_choose">设置位置</string>
+    <string name="ir_stb_hint">* 机顶盒遥控器由运营商提供</string>
 </resources>

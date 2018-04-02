@@ -76,7 +76,7 @@ public class IRMatchTestAcActivity extends IRMatchTestActivity {
     @Override
     protected void loadCurrentRemoteData(final int remoteId, final int deviceType) {
 
-        KookongSDK.getIRDataById(String.valueOf(remoteId), Device.AC, new IRequestResult<IrDataList>() {
+        KookongSDK.testIRDataById(String.valueOf(remoteId), Device.AC, new IRequestResult<IrDataList>() {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null) {
@@ -101,13 +101,18 @@ public class IRMatchTestAcActivity extends IRMatchTestActivity {
     @Override
     protected void onClickMatchButton() {
         if (mAcManager != null && mTestIRData != null) {
-            int[] irArray = getAcIrByStep();
-            EventSendIR event = new EventSendIR();
-            event.setDeviceType(Device.AC);
-            event.setRemoteId(mRemoteIds.get(mCurrentIdPosition));
-            event.setIrDataArray(irArray);
-            event.setFrequency(mTestIRData.fre);
-            EventBus.getDefault().post(event);
+            runOnThread(new Runnable() {
+                @Override
+                public void run() {
+                    int[] irArray = getAcIrByStep();
+                    EventSendIR event = new EventSendIR();
+                    event.setDeviceType(Device.AC);
+                    event.setRemoteId(mRemoteIds.get(mCurrentIdPosition));
+                    event.setIrDataArray(irArray);
+                    event.setFrequency(mTestIRData.fre);
+                    EventBus.getDefault().post(event);
+                }
+            });
         }
     }
 
@@ -167,6 +172,7 @@ public class IRMatchTestAcActivity extends IRMatchTestActivity {
                 } else if (which == DialogInterface.BUTTON_POSITIVE) {
                     InputNameDialog myDialog = (InputNameDialog) dialog;
                     dialog.dismiss();
+
                     EventBus.getDefault().post(
                             new EventMatchSuccess(IRUtils.saveMatchedRemoteBean(mTestIRData.fre, mBrand, mDeviceType, mRemoteIds.get(mCurrentIdPosition),
                                     mAcManager.getACStateV2InString(), myDialog.getInput(),mTestIRData.exts,mTestIRData.keys)));

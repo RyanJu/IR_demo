@@ -19,8 +19,7 @@ import java.util.HashMap;
  */
 
 public class IRBean {
-    public static final int NORMAL_STB = 0;
-    public static final int IPTV = 1;
+
 
 
     //database id,auto increase

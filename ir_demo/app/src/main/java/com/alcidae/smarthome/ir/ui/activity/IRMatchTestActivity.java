@@ -31,6 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Create By zhurongkun
@@ -58,6 +60,8 @@ public class IRMatchTestActivity extends Activity implements View.OnClickListene
 
     protected IrData mTestIRData;
 
+    private ExecutorService mThreadPool;
+
     public static void launch(Activity activity, int requestCode, int deviceType, BrandList.Brand brand) {
         Class targetClz = IRMatchTestActivity.class;
         if (deviceType == Device.AC) {
@@ -67,7 +71,7 @@ public class IRMatchTestActivity extends Activity implements View.OnClickListene
 
         Intent intent = new Intent(activity, targetClz);
         intent.putExtra("deviceType", deviceType);
-        intent.putExtra("brand", brand);
+        intent.putExtra("stb", brand);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -171,7 +175,7 @@ public class IRMatchTestActivity extends Activity implements View.OnClickListene
     private void initData() {
         Intent intent = getIntent();
         mDeviceType = intent.getIntExtra("deviceType", -1);
-        mBrand = (BrandList.Brand) intent.getSerializableExtra("brand");
+        mBrand = (BrandList.Brand) intent.getSerializableExtra("stb");
     }
 
     private void initViews() {
@@ -206,7 +210,6 @@ public class IRMatchTestActivity extends Activity implements View.OnClickListene
     }
 
 
-
     protected void onClickMatchButton() {
 
         if (mTestIRData != null) {
@@ -235,5 +238,12 @@ public class IRMatchTestActivity extends Activity implements View.OnClickListene
     private void vibrate(long time) {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(time);
+    }
+
+    protected synchronized void runOnThread(Runnable runnable) {
+        if (mThreadPool == null) {
+            mThreadPool = Executors.newCachedThreadPool();
+        }
+        mThreadPool.execute(runnable);
     }
 }

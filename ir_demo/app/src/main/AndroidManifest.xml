@@ -37,6 +37,7 @@
             android:name=".ir.ui.activity.IRChooseOperatorActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ir.ui.activity.match.IRMatchStbActivity" />
+        <activity android:name=".ir.ui.activity.IRChooseIPTVBrandActivity" />
     </application>
 
 </manifest>

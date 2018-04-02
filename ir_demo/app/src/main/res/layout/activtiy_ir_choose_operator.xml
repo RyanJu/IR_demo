@@ -22,37 +22,90 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/ir_choose_operator" />
+
+        <com.alcidae.smarthome.ir.widget.MyTextView
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="@string/manual_choose"
+            android:textColor="@color/color_222222"
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="50dp"
         android:background="@color/color_f8f8f8"
         android:padding="15dp">
 
-        <EditText
-            android:id="@+id/id_dialog_choose_operator_search_tv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_search"
-            android:hint="@string/search_for_your_operator"
-            android:paddingLeft="47dp"
-            android:textColor="@color/color_777777"
-            android:textColorHint="@color/color_dddddd"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <LinearLayout
+            android:id="@+id/id_activity_ir_choose_operators_search_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/ir_search" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ir_ic_search" />
+
+            <com.alcidae.smarthome.ir.widget.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/search_for_your_operator"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_activity_ir_choose_operators_location_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ir_location" />
+
+            <com.alcidae.smarthome.ir.widget.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:text="location"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_dialog_choose_operator_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/ir_bg_white"
-        />
+        android:layout_height="wrap_content"
+        android:background="@color/ir_bg_white" />
+    <com.alcidae.smarthome.ir.widget.MyTextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/color_999999"
+        android:text="@string/ir_stb_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

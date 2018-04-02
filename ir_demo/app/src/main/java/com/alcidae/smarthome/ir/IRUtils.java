@@ -2,19 +2,26 @@ package com.alcidae.smarthome.ir;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.db.DbUtil;
 import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.alcidae.smarthome.ir.ui.dialog.AcRemoteControllerDialog;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hzy.tvmao.KookongSDK;
+import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.IrData;
+import com.kookong.app.data.IrDataList;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,14 +39,15 @@ import java.util.List;
  */
 
 public class IRUtils {
+
     private static final String key = "36C9647F80C96B0214EF3F912B6250A2";
     private static final String irDeviceId = "1";
+    private static final String IR_SP_NAME = "IR_SP";
     private static Context sContext;
 
     private static String sProvince = "广东省";
     private static String sCity = "深圳市";
     private static String sArea = "南山区";
-
 
     public static void init(Context context) {
         sContext = context.getApplicationContext();
@@ -132,7 +140,64 @@ public class IRUtils {
         } else {
             return new Dialog(context);
         }
+    }
+
+    public static void getIRData(int deviceType, int remoteId, final IRequestResult<IrDataList> result) {
+        if (result == null) {
+            return;
+        }
+        final String key = String.valueOf(deviceType) + "_" + String.valueOf(remoteId);
+        final SharedPreferences sp = sContext.getSharedPreferences(IR_SP_NAME, Context.MODE_PRIVATE);
+        if (sContext != null) {
+            String saved = sp.getString(key, "");
+            if (!TextUtils.isEmpty(saved)) {
+                IrData irData = parseJson(saved, IrData.class);
+                if (irData != null) {
+                    IrDataList list = new IrDataList();
+                    List<IrData> l = new ArrayList<>(1);
+                    l.add(irData);
+                    list.setIrDataList(l);
+                    result.onSuccess("", list);
+                    return;
+                }
+            }
+        }
+
+        KookongSDK.getIRDataById(String.valueOf(remoteId), deviceType, new IRequestResult<IrDataList>() {
+            @Override
+            public void onSuccess(String s, IrDataList irDataList) {
+                if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
+                    IrData irData = irDataList.getIrDataList().get(0);
+                    sp.edit().putString(key, toJson(irData)).apply();
+                    result.onSuccess(s, irDataList);
+                }
+            }
+
+            @Override
+            public void onFail(Integer integer, String s) {
+                result.onFail(integer, s);
+            }
+        });
 
     }
 
+    public static String toJson(Object target) {
+        try {
+            String json = new ObjectMapper().writeValueAsString(target);
+            LogUtil.i("tojson :" + json);
+            return json;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static <T> T parseJson(String json, Class<T> tClass) {
+        try {
+            return new ObjectMapper().readValue(json, tClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

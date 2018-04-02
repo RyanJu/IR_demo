@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
+import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchStbActivity;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
@@ -93,7 +94,6 @@ public class IRChooseOperatorActivity extends Activity {
             }
         });
 
-
     }
 
     private void refreshView() {
@@ -102,10 +102,13 @@ public class IRChooseOperatorActivity extends Activity {
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<SpList.Sp>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, SpList.Sp data) {
-                IRMatchBaseActivity.launchByStb(IRChooseOperatorActivity.this, 666, mDeviceType, mAreaId, data);
+                if (data.type == IRConst.IPTV){
+                    IRChooseIPTVBrandActivity.launch(IRChooseOperatorActivity.this,919,mDeviceType,mAreaId,data);
+                }else {
+                    IRMatchBaseActivity.launchByStb(IRChooseOperatorActivity.this, 666, mDeviceType, mAreaId, data);
+                }
             }
         });
-
     }
 
     private boolean checkArea() {

@@ -10,11 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alcidae.smarthome.R;
+import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
 import com.hzy.tvmao.KKACManagerV2;
-import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.ac.ACConstants;
 import com.hzy.tvmao.ir.ac.ACStateV2;
@@ -84,7 +84,7 @@ public class AcRemoteControllerDialog extends BaseFloatDialog implements View.On
     }
 
     private void loadIrData() {
-        KookongSDK.getIRDataById(String.valueOf(mIrBean.getRemoteId()), mIrBean.getDeviceType(), new IRequestResult<IrDataList>() {
+        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new IRequestResult<IrDataList>() {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {

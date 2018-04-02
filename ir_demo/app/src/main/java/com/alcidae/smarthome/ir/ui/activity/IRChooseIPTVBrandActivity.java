@@ -15,23 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
-import com.alcidae.smarthome.ir.data.EventMatchSuccess;
-import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
+import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
-import com.hzy.tvmao.ir.Device;
-import com.hzy.tvmao.utils.LogUtil;
-import com.kookong.app.data.BrandHuaWeiList;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.SpList;
 import com.kookong.app.data.StbList;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,70 +32,104 @@ import java.util.List;
  * Create By zhurongkun
  *
  * @author zhurongkun
- * @version 2018/3/26 14:21 1.0
- * @time 2018/3/26 14:21
+ * @version 2018/4/2 18:07 1.0
+ * @time 2018/4/2 18:07
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
  * @description
  * @updateVersion 1.0
- * @updateTime 2018/3/26 14:21
+ * @updateTime 2018/4/2 18:07
  */
 
-public class IRChooseBrandActivity extends Activity implements View.OnClickListener {
-    private int mDeviceType;
+public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickListener {
+
     private RecyclerView mBrandRv;
     private EditText mSearchEt;
+    private int mDeviceType;
+    private int mAreaId;
+    private SpList.Sp mSp;
 
     private List<ItemBean> mItems;
 
-    public static void launch(Activity activity, int deviceType, int requestCode) {
-        Intent intent = new Intent(activity, IRChooseBrandActivity.class);
+    public static void launch(Activity from, int requestCode, int deviceType, int areaId, SpList.Sp sp) {
+        Intent intent = new Intent(from, IRChooseIPTVBrandActivity.class);
         intent.putExtra("deviceType", deviceType);
-        activity.startActivityForResult(intent, requestCode);
+        intent.putExtra("areaId", areaId);
+        intent.putExtra("sp", sp);
+        from.startActivityForResult(intent, requestCode);
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ir_choose_brands);
-        EventBus.getDefault().register(this);
+        setContentView(R.layout.activity_ir_choose_iptv_brand);
         initViews();
         initData();
-        loadBrands();
+        loadAndRefresh();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EventMatchSuccess eventMatchSuccess) {
-        finish();
-    }
-
-    private void initData() {
-        mDeviceType = getIntent().getIntExtra("deviceType", -1);
-    }
-
-    private void loadBrands() {
-        mItems = new ArrayList<>();
-        KookongSDK.getBrandListFromNet(mDeviceType, new IRequestResult<BrandList>() {
+    private void loadAndRefresh() {
+        KookongSDK.getIPTV(mSp.spId, new IRequestResult<StbList>() {
             @Override
-            public void onSuccess(String s, BrandList brandList) {
-                LogUtil.i("getBrandListFromNet succ: size-->" + brandList.brandList.size());
-
-                addBrands(brandList.hotCount, brandList.brandList);
-                refreshItems();
+            public void onSuccess(String s, StbList stbList) {
+                mItems = new ArrayList<>();
+                addBrands(3, stbList.stbList);
+                mBrandRv.setAdapter(new BrandAdapter(IRChooseIPTVBrandActivity.this, mItems));
             }
 
             @Override
             public void onFail(Integer integer, String s) {
-                LogUtil.e("getBrandListFromNet failed: err-->" + s + ",code-->" + integer);
+                ToastUtil.toast(IRChooseIPTVBrandActivity.this, R.string.ir_error_network);
             }
         });
     }
+
+    private void addBrands(int hotCount, List<StbList.Stb> brandList) {
+        if (mItems == null || brandList == null)
+            return;
+
+        addCommonBrands(hotCount, brandList);
+
+        Collections.sort(brandList, new Comparator<StbList.Stb>() {
+            @Override
+            public int compare(StbList.Stb o1, StbList.Stb o2) {
+                String s1 = o1.bname == null ? "" : o1.bname;
+                String s2 = o2.bname == null ? "" : o2.bname;
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+
+        ItemBean title = null;
+        for (StbList.Stb brand : brandList) {
+            if (title == null || !brand.bname.startsWith(title.title)) {
+                title = new ItemBean(true, String.valueOf(brand.bname.charAt(0)));
+                mItems.add(title);
+            }
+            mItems.add(new ItemBean(brand));
+        }
+    }
+
+
+    private void addCommonBrands(int hotCount, List<StbList.Stb> stbs) {
+        if (mItems == null) {
+            mItems = new ArrayList<>();
+        }
+
+
+        mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
+
+        for (int i = 0; i < hotCount; i++) {
+            mItems.add(new ItemBean(stbs.get(i)));
+        }
+
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        mDeviceType = intent.getIntExtra("deviceType", -1);
+        mAreaId = intent.getIntExtra("areaId", -1);
+        mSp = (SpList.Sp) intent.getSerializableExtra("sp");
+    }
+
 
     private void initViews() {
         findViewById(R.id.id_dialog_choose_brand_back_iv)
@@ -114,80 +139,28 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         mBrandRv.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void refreshItems() {
-        BrandAdapter adapter = new BrandAdapter(this, mItems);
-        mBrandRv.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SimpleOnItemClickListener<BrandList.Brand>() {
-            @Override
-            public void onClickItem(RecyclerView.Adapter adapter, int position, BrandList.Brand data) {
-                IRMatchBaseActivity.launchCommon(IRChooseBrandActivity.this,
-                        100, mDeviceType, data);
-            }
-        });
-    }
-
-    private void addBrands(int hotCount, List<BrandList.Brand> brandList) {
-        if (mItems == null || brandList == null)
-            return;
-
-        addCommonBrands(hotCount, brandList);
-
-        Collections.sort(brandList, new Comparator<BrandList.Brand>() {
-            @Override
-            public int compare(BrandList.Brand o1, BrandList.Brand o2) {
-                String s1 = o1.ename == null ? "" : o1.ename;
-                String s2 = o2.ename == null ? "" : o2.ename;
-                return s1.compareToIgnoreCase(s2);
-            }
-        });
-
-        ItemBean title = null;
-        for (BrandList.Brand brand : brandList) {
-            if (title == null || !TextUtils.equals(title.title, brand.initial)) {
-                title = new ItemBean(true, brand.initial);
-                mItems.add(title);
-            }
-            mItems.add(new ItemBean(brand));
-        }
-    }
-
-
-    private void addCommonBrands(int hotCount, List<BrandList.Brand> brandList) {
-        if (mItems == null) {
-            mItems = new ArrayList<>();
-        }
-
-
-        mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
-
-        for (int i = 0; i < hotCount; i++) {
-            mItems.add(new ItemBean(brandList.get(i)));
-        }
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.id_dialog_choose_brand_back_iv:
-                setResult(RESULT_CANCELED);
                 finish();
                 break;
+
         }
     }
 
     private class ItemBean {
         boolean isTitle;
         String title;
-        BrandList.Brand brand;
+        StbList.Stb stb;
 
         public ItemBean(boolean isTitle, String title) {
             this.isTitle = isTitle;
             this.title = title;
         }
 
-        public ItemBean(BrandList.Brand brand) {
-            this.brand = brand;
+        public ItemBean(StbList.Stb stb) {
+            this.stb = stb;
         }
     }
 
@@ -198,7 +171,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         private static final int VIEW_BRAND = 1;
         private Context mContext;
         private List<ItemBean> mItems;
-        private SimpleOnItemClickListener<BrandList.Brand> onItemClickListener;
+        private SimpleOnItemClickListener<StbList.Stb> onItemClickListener;
 
         public BrandAdapter(Context mContext, List<ItemBean> mItems) {
             this.mContext = mContext;
@@ -206,24 +179,24 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         }
 
         @Override
-        public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public BrandAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             if (viewType == VIEW_TITLE) {
-                return new TitleHolder(inflater.inflate(R.layout.adapter_ir_brand_title, parent, false));
+                return new BrandAdapter.TitleHolder(inflater.inflate(R.layout.adapter_ir_brand_title, parent, false));
             }
-            return new BrandHolder(inflater.inflate(R.layout.adapter_ir_brand, parent, false));
+            return new BrandAdapter.BrandHolder(inflater.inflate(R.layout.adapter_ir_brand, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(Holder holder, int position) {
+        public void onBindViewHolder(BrandAdapter.Holder holder, int position) {
             ItemBean itemBean = mItems.get(position);
             int viewType = getItemViewType(position);
             if (viewType == VIEW_TITLE) {
-                TitleHolder th = (TitleHolder) holder;
+                BrandAdapter.TitleHolder th = (BrandAdapter.TitleHolder) holder;
                 th.mTextTv.setText(itemBean.title);
             } else {
-                BrandHolder bh = (BrandHolder) holder;
-                bh.mTextTv.setText(itemBean.brand.ename);
+                BrandAdapter.BrandHolder bh = (BrandAdapter.BrandHolder) holder;
+                bh.mTextTv.setText(itemBean.stb.bname);
             }
         }
 
@@ -237,11 +210,11 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             return mItems.size();
         }
 
-        public SimpleOnItemClickListener<BrandList.Brand> getOnItemClickListener() {
+        public SimpleOnItemClickListener<StbList.Stb> getOnItemClickListener() {
             return onItemClickListener;
         }
 
-        public void setOnItemClickListener(SimpleOnItemClickListener<BrandList.Brand> onItemClickListener) {
+        public void setOnItemClickListener(SimpleOnItemClickListener<StbList.Stb> onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
         }
 
@@ -252,7 +225,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             }
         }
 
-        class TitleHolder extends Holder {
+        class TitleHolder extends BrandAdapter.Holder {
 
             private final TextView mTextTv;
 
@@ -262,7 +235,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             }
         }
 
-        class BrandHolder extends Holder {
+        class BrandHolder extends BrandAdapter.Holder {
             private final TextView mTextTv;
 
             public BrandHolder(View itemView) {
@@ -277,7 +250,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
                             if (itemBean.isTitle) {
                                 return;
                             }
-                            onItemClickListener.onClickItem(BrandAdapter.this, position, itemBean.brand);
+                            onItemClickListener.onClickItem(BrandAdapter.this, position, itemBean.stb);
                         }
                     }
                 });

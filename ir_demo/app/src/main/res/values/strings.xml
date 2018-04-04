@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">IR_demo</string>
+
+    <!-- ir -->
     <string name="ir_choose_control">Choose Device</string>
     <string name="ir_ac">Air Conditioner</string>
     <string name="ir_tv">TV</string>
@@ -12,19 +14,18 @@
     <string name="ir_bulb">Light Bulb</string>
     <string name="ir_air_clean">Air Cleaner</string>
     <string name="ir_choose_brand">Choose a brand</string>
-    <string name="search_for_your_brand">Search for your brand</string>
+    <string name="ir_search_for_your_brand">Search for your brand</string>
     <string name="ir_common_brands">Common Brands</string>
     <string name="ir_match_hint" >1.Please let the controlled electric appliance appear in the video screen, and click the button to send the infrared signal.\n\n2. Choose whether or not according to the equipment.</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="power">Power</string>
+    <string name="ir_no">No</string>
+    <string name="ir_yes">Yes</string>
+    <string name="ir_power">Power</string>
     <string name="ir_mode">Mode</string>
-    <string name="wind_direction">Wind Direction</string>
-    <string name="preservation">Preservation</string>
+    <string name="ir_preservation">Preservation</string>
     <string name="ir_dialog_input_name_hint">Warm hint: the smart wizard has provided the best matching results, and you can choose to save it. If there are other key requirements, please add the learning button and the extension function.</string>
     <string name="ir_cancel">Cancel</string>
     <string name="ir_ok">OK</string>
-    <string name="add_unsuccessful">Add unsuccessful</string>
+    <string name="ir_add_unsuccessful">Add unsuccessful</string>
     <string name="ir_dialog_add_unsuccessful_hint">The possible reason is: Please rotate the camera first to ensure that the added electrical appliances can be seen in the video interface.</string>
     <string name="ir_speed">Speed</string>
     <string name="ir_wind_direction">Wind Direction</string>
@@ -32,11 +33,34 @@
     <string name="ir_timing">Timing</string>
     <string name="ir_error_network">Net work problems.</string>
     <string name="ir_choose_operator">Choose Operator</string>
-    <string name="search_for_your_operator">Search operator</string>
+    <string name="ir_search_for_your_operator">Search operator</string>
     <string name="ir_error_area">Can\'t locate your area.</string>
     <string name="ir_volume">Volume</string>
     <string name="ir_temp">Temp.</string>
-    <string name="manual_choose">Set Location</string>
+    <string name="ir_manual_choose">Set Location</string>
     <string name="ir_stb_hint">* Remote control of Set top box is provided by operators</string>
+    <string name="ir_mute">Mute</string>
+    <string name="ir_empty_name">Can\'t be empty!</string>
+    <string name="ir_menu">Menu</string>
+    <string name="ir_alternate">Alternate</string>
+    <string name="ir_back">Back</string>
+    <string name="ir_home">Home</string>
+    <string name="ir_channel">Channel</string>
+    <string name="num">123</string>
+    <string name="num_1">1</string>
+    <string name="num_2">2</string>
+    <string name="num_3">3</string>
+    <string name="num_4">4</string>
+    <string name="num_5">5</string>
+    <string name="num_6">6</string>
+    <string name="num_7">7</string>
+    <string name="num_8">8</string>
+    <string name="num_9">9</string>
+    <string name="num_input">-/--</string>
+    <string name="num_0">0</string>
+    <string name="ir_signal">Signal</string>
+    <string name="ir_search_for_your_stb">Search STB</string>
+    <string name="ir_search_failed">No such STBs!</string>
+    <string name="ir_choose_area">Choose Area</string>
 
 </resources>

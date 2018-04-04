@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
+import com.alcidae.smarthome.ir.data.EventMatchSuccess;
+import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
-import com.kookong.app.data.BrandList;
 import com.kookong.app.data.SpList;
 import com.kookong.app.data.StbList;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +44,7 @@ import java.util.List;
  * @updateTime 2018/4/2 18:07
  */
 
-public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickListener {
+public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickListener, SimpleOnItemClickListener<StbList.Stb> {
 
     private RecyclerView mBrandRv;
     private EditText mSearchEt;
@@ -65,6 +69,18 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
         initViews();
         initData();
         loadAndRefresh();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventMatchSuccess eventMatchSuccess) {
+        finish();
     }
 
     private void loadAndRefresh() {
@@ -72,8 +88,10 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
             @Override
             public void onSuccess(String s, StbList stbList) {
                 mItems = new ArrayList<>();
-                addBrands(3, stbList.stbList);
-                mBrandRv.setAdapter(new BrandAdapter(IRChooseIPTVBrandActivity.this, mItems));
+                addBrands(6, stbList.stbList);
+                BrandAdapter brandAdapter = new BrandAdapter(IRChooseIPTVBrandActivity.this, mItems);
+                mBrandRv.setAdapter(brandAdapter);
+                brandAdapter.setOnItemClickListener(IRChooseIPTVBrandActivity.this);
             }
 
             @Override
@@ -117,6 +135,8 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
 
         mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
 
+        hotCount = hotCount > stbs.size() ? stbs.size() : hotCount;
+
         for (int i = 0; i < hotCount; i++) {
             mItems.add(new ItemBean(stbs.get(i)));
         }
@@ -147,6 +167,12 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
                 break;
 
         }
+    }
+
+    //click brand item
+    @Override
+    public void onClickItem(RecyclerView.Adapter adapter, int position, StbList.Stb data) {
+        IRMatchBaseActivity.launchByIPTV(this, 8818, mDeviceType, mAreaId, mSp, data);
     }
 
     private class ItemBean {

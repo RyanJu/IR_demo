@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ir_bg_white"
+    android:orientation="vertical">
+
+    <com.alcidae.smarthome.ir.widget.IrTextView
+        android:id="@+id/id_adapter_ir_brand_item_tv"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="14dp"
+        android:text="Aux"
+        android:textColor="@color/color_222222"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_marginLeft="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_d9eeeff1" />
+
+</LinearLayout>

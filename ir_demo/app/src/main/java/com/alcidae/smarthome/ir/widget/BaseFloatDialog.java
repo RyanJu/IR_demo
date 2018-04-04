@@ -22,5 +22,6 @@ import com.alcidae.smarthome.R;
 public class BaseFloatDialog extends Dialog {
     public BaseFloatDialog(@NonNull Context context) {
         super(context, R.style.DialogBaseStyle);
+
     }
 }

@@ -16,7 +16,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,15 +30,19 @@
         android:background="@color/color_f8f8f8"
         android:padding="15dp">
 
-        <EditText
+        <com.alcidae.smarthome.ir.widget.IrAutoCompleteTextView
+            android:completionThreshold="1"
             android:id="@+id/id_dialog_choose_brand_search_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_search"
-            android:hint="@string/search_for_your_brand"
+            android:hint="@string/ir_search_for_your_brand"
             android:paddingLeft="47dp"
             android:textColor="@color/color_777777"
             android:textColorHint="@color/color_dddddd"
+            android:imeOptions="actionGo"
+            android:singleLine="true"
+            android:inputType="text"
             android:textSize="17sp" />
 
         <ImageView

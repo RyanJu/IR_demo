@@ -12,7 +12,7 @@
         android:scaleType="center"
         android:src="@drawable/ir_ac" />
 
-    <com.alcidae.smarthome.ir.widget.MyTextView
+    <com.alcidae.smarthome.ir.widget.IrTextView
         android:id="@+id/id_adapter_ir_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

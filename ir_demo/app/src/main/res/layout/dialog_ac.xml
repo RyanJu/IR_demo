@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             android:id="@+id/id_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,7 +49,7 @@
             android:layout_height="165dp"
             android:layout_centerInParent="true">
 
-            <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                 android:id="@+id/id_dialog_ac_power_iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -64,7 +64,7 @@
                 android:scaleType="center"
                 android:src="@drawable/ir_ac_mode_cold" />
 
-            <com.alcidae.smarthome.ir.widget.MyTextViewDigital
+            <com.alcidae.smarthome.ir.widget.IrTextViewDigital
                 android:id="@+id/id_dialog_ac_temp_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                     android:gravity="center"
                     android:src="@drawable/temp_du" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextViewDigital
+                <com.alcidae.smarthome.ir.widget.IrTextViewDigital
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-6dp"
@@ -98,7 +98,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+        <com.alcidae.smarthome.ir.widget.IrVibrateImageView
             android:id="@+id/id_dialog_ac_temp_down_iv"
             android:layout_width="58dp"
             android:layout_height="58dp"
@@ -106,7 +106,7 @@
             android:layout_marginLeft="20dp"
             android:src="@drawable/selector_ac_temp_down" />
 
-        <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+        <com.alcidae.smarthome.ir.widget.IrVibrateImageView
             android:id="@+id/id_dialog_ac_temp_up_iv"
             android:layout_width="58dp"
             android:layout_height="58dp"
@@ -136,13 +136,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                     android:id="@+id/id_dialog_ac_mode_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/selector_ac_pattern" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -158,13 +158,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                     android:id="@+id/id_dialog_ac_speed_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/selector_ac_speed" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -180,13 +180,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                     android:id="@+id/id_dialog_ac_wind_direction_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/selector_ac_wind_direction" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -204,13 +204,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                     android:id="@+id/id_dialog_ac_swing_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/selector_ac_swept" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -229,7 +229,7 @@
             android:orientation="horizontal">
 
 
-            <com.alcidae.smarthome.ir.widget.MyTextViewDigital
+            <com.alcidae.smarthome.ir.widget.IrTextViewDigital
                 android:id="@+id/id_dialog_ac_timing_tv"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
@@ -250,7 +250,7 @@
                 android:progressDrawable="@drawable/selector_time_seekbar_progress"
                 android:thumb="@drawable/selector_time_seekbar_thumb" />
 
-            <com.alcidae.smarthome.ir.widget.MyTextView
+            <com.alcidae.smarthome.ir.widget.IrTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -268,7 +268,7 @@
                 android:layout_marginRight="12dp"
                 android:orientation="horizontal">
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -277,7 +277,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -286,7 +286,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -295,7 +295,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -304,7 +304,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -313,7 +313,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -322,7 +322,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -331,7 +331,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -340,7 +340,7 @@
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                <com.alcidae.smarthome.ir.widget.IrTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -351,7 +351,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:gravity="center"

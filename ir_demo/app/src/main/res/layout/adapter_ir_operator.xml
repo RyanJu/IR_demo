@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/ir_bg_white">
 
-    <com.alcidae.smarthome.ir.widget.MyTextView
+    <com.alcidae.smarthome.ir.widget.IrTextView
         android:id="@+id/id_adapter_ir_brand_item_tv"
         android:layout_width="match_parent"
         android:layout_height="45dp"

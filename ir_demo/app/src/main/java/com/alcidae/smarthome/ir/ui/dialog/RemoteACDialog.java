@@ -37,9 +37,8 @@ import org.greenrobot.eventbus.EventBus;
  * @updateTime 2018/3/27 19:31
  */
 
-public class AcRemoteControllerDialog extends BaseFloatDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
+public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickListener, DialogInterface.OnDismissListener {
 
-    private final IRBean mIrBean;
     private View mCloseIv;
     private TextView mTitleTv;
     private View mTempDownIv;
@@ -65,9 +64,8 @@ public class AcRemoteControllerDialog extends BaseFloatDialog implements View.On
     //load from server
     private IrData mIrData;
 
-    public AcRemoteControllerDialog(@NonNull Context context, IRBean irBean) {
-        super(context);
-        this.mIrBean = irBean;
+    public RemoteACDialog(@NonNull Context context, IRBean irBean) {
+        super(context, irBean);
         mAcManger = new KKACManagerV2();
         initAcManger(irBean);
 
@@ -134,7 +132,7 @@ public class AcRemoteControllerDialog extends BaseFloatDialog implements View.On
 
         String ac = getContext().getResources().getString(R.string.ir_ac);
         String title = mIrBean != null ? mIrBean.getBrandName() + " " + ac : ac;
-        mTitleTv.setText(title);
+        mTitleTv.setText(mIrBean.getCustomName());
 
         mCloseIv.setOnClickListener(this);
         mTempDownIv.setOnClickListener(this);
@@ -381,7 +379,6 @@ public class AcRemoteControllerDialog extends BaseFloatDialog implements View.On
         eventSendIR.setRemoteId(mIrBean.getRemoteId());
         eventSendIR.setIrDataArray(mAcManger.getACIRPatternIntArray());
         EventBus.getDefault().post(eventSendIR);
-        mAcManger.getACIRPatternIntArray();
     }
 
     @Override

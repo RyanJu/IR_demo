@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
+import com.alcidae.smarthome.ir.data.IRConst;
 import com.hzy.tvmao.ir.Device;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.SpList;
+import com.kookong.app.data.StbList;
 
 /**
  * Create By zhurongkun
@@ -31,12 +33,13 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected TextView mTitleTv;
     protected int mDeviceType;
     protected BrandList.Brand mBrand;
-    protected ImageView mTestIv;
-    protected TextView mTestTv;
+    protected ImageView mCenterButtonIv;
+    protected TextView mCenterButtonHintTv;
     protected View mVolumeLayout;
     protected View mMatchBtn;
     protected int mAreaid;
     protected SpList.Sp mSp;
+    protected StbList.Stb mStb;
 
     public static void launchCommon(Activity activity, int requestCode, int deviceType, BrandList.Brand brand) {
         launch(activity, requestCode, deviceType, brand, 0, null);
@@ -46,7 +49,17 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         launch(activity, requestCode, deviceType, null, areaId, sp);
     }
 
-//    public static void launchByIPTV(Activity activity,int requestCode,int deice)
+    public static void launchByIPTV(Activity activity, int requestCode, int deviceType, int areaId, SpList.Sp sp, StbList.Stb stb) {
+        Intent intent = new Intent();
+        Class targetClz = IRMatchStbIPTVActivity.class;
+        intent.setClass(activity, targetClz);
+        intent.putExtra("deviceType", deviceType);
+        intent.putExtra("stb", stb);
+        intent.putExtra("areaId", areaId);
+        intent.putExtra("sp", sp);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
 
     /**
      * @param activity
@@ -56,7 +69,8 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
      * @param areaId      机顶盒必填，其他无效
      * @param sp          机顶盒必填，其他填null
      */
-    public static void launch(Activity activity, int requestCode, int deviceType, @Nullable BrandList.Brand brand, int areaId, @Nullable SpList.Sp sp) {
+    private static void launch(Activity activity, int requestCode, int deviceType, @Nullable BrandList.Brand brand, int areaId, @Nullable SpList.Sp sp) {
+
 
         Intent intent = new Intent();
         Class targetClz = null;
@@ -66,7 +80,17 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
                 targetClz = IRMatchAcActivity.class;
                 break;
             case Device.STB:
-                targetClz = IRMatchStbActivity.class;
+                if (sp.type == IRConst.IPTV) {
+                    //iptv is not calling this function
+                    return;
+                }
+                targetClz = IRMatchStbNormalActivity.class;
+                break;
+            case Device.TV:
+                targetClz = IRMatchTVActivity.class;
+                break;
+            case Device.BOX:
+                targetClz = IRMatchBoxActivtiy.class;
                 break;
         }
 
@@ -96,15 +120,16 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         mBrand = (BrandList.Brand) intent.getSerializableExtra("brand");
         mAreaid = intent.getIntExtra("areaId", 0);
         mSp = (SpList.Sp) intent.getSerializableExtra("sp");
+        mStb = (StbList.Stb) intent.getSerializableExtra("stb");
     }
 
     private void initViews() {
         findViewById(R.id.id_ir_back_iv).setOnClickListener(this);
         this.mTitleTv = findViewById(R.id.id_activity_ir_match_test_title_tv);
-        this.mTestIv = findViewById(R.id.id_activity_ir_match_test_btn_iv);
-        this.mTestTv = findViewById(R.id.id_activity_ir_match_test_btn_text_tv);
+        this.mCenterButtonIv = findViewById(R.id.id_activity_ir_match_test_btn_iv);
+        this.mCenterButtonHintTv = findViewById(R.id.id_activity_ir_match_test_btn_text_tv);
         this.mVolumeLayout = findViewById(R.id.id_activity_ir_match_test_volume_layout);
-        this.mTestIv.setOnClickListener(this);
+        this.mCenterButtonIv.setOnClickListener(this);
         findViewById(R.id.id_activity_ir_match_test_no_btn)
                 .setOnClickListener(this);
         findViewById(R.id.id_activity_ir_match_test_yes_btn)
@@ -141,40 +166,30 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected void showMatchVolume(boolean show) {
         if (show) {
             mVolumeLayout.setVisibility(View.VISIBLE);
-            mTestIv.setVisibility(View.GONE);
+            mCenterButtonIv.setVisibility(View.GONE);
         } else {
             mVolumeLayout.setVisibility(View.GONE);
-            mTestIv.setVisibility(View.VISIBLE);
+            mCenterButtonIv.setVisibility(View.VISIBLE);
         }
     }
 
-    protected void onClickVolumeUp() {
+    protected abstract void onClickVolumeUp();
 
-    }
+    protected abstract void onClickVolumeDown();
 
-    protected void onClickVolumeDown() {
-
-    }
-
-    protected void setTitle(String suffix) {
+    protected void fillTitle(String suffix) {
         try {
             String _s = suffix == null ? "" : suffix;
             mTitleTv.setText(mBrand.ename + " " + IRUtils.deviceTypeToString(this, mDeviceType)
                     + " " + _s);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
-    protected void onClickMatchButton() {
+    protected abstract void onClickMatchButton();
 
-    }
+    protected abstract void onClickButtonYes();
 
-    protected void onClickButtonYes() {
-
-    }
-
-    protected void onClickButtonNo() {
-
-    }
+    protected abstract void onClickButtonNo();
 }

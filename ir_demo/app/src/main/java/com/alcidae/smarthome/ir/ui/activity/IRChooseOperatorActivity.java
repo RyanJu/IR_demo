@@ -3,6 +3,11 @@ package com.alcidae.smarthome.ir.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,9 +20,11 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
+import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
-import com.alcidae.smarthome.ir.ui.activity.match.IRMatchStbActivity;
+import com.alcidae.smarthome.ir.ui.dialog.ChooseAreaDialog;
+import com.alcidae.smarthome.ir.util.LocationUtil;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
@@ -25,7 +32,13 @@ import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.SpList;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Create By zhurongkun
@@ -46,6 +59,8 @@ public class IRChooseOperatorActivity extends Activity {
     private List<SpList.Sp> mOperators;
     private int mAreaId;
     private SpList.Sp mOperator;
+    private TextView mLocationTv;
+
 
     public static void launch(Activity from, int deviceType, int requestCode) {
         Intent intent = new Intent(from, IRChooseOperatorActivity.class);
@@ -57,9 +72,21 @@ public class IRChooseOperatorActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activtiy_ir_choose_operator);
+        EventBus.getDefault().register(this);
         initView();
         initData();
-        loadOperators();
+        loadCurrentLocation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EventMatchSuccess eventMatchSuccess) {
+        finish();
     }
 
     private void loadOperators() {
@@ -102,9 +129,9 @@ public class IRChooseOperatorActivity extends Activity {
         adapter.setOnItemClickListener(new SimpleOnItemClickListener<SpList.Sp>() {
             @Override
             public void onClickItem(RecyclerView.Adapter adapter, int position, SpList.Sp data) {
-                if (data.type == IRConst.IPTV){
-                    IRChooseIPTVBrandActivity.launch(IRChooseOperatorActivity.this,919,mDeviceType,mAreaId,data);
-                }else {
+                if (data.type == IRConst.IPTV) {
+                    IRChooseIPTVBrandActivity.launch(IRChooseOperatorActivity.this, 919, mDeviceType, mAreaId, data);
+                } else {
                     IRMatchBaseActivity.launchByStb(IRChooseOperatorActivity.this, 666, mDeviceType, mAreaId, data);
                 }
             }
@@ -114,7 +141,7 @@ public class IRChooseOperatorActivity extends Activity {
     private boolean checkArea() {
         return !(TextUtils.isEmpty(IRUtils.getProvince()))
                 && !(TextUtils.isEmpty(IRUtils.getCity()))
-                && !(TextUtils.isEmpty(IRUtils.getArea()));
+                ;
     }
 
     private void initData() {
@@ -130,6 +157,39 @@ public class IRChooseOperatorActivity extends Activity {
         });
         mOperatorsRv = findViewById(R.id.id_dialog_choose_operator_rv);
         mOperatorsRv.setLayoutManager(new LinearLayoutManager(this));
+        findViewById(R.id.id_activity_ir_choose_operators_search_ll).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //search stb
+                IRSearchStbActivity.launch(IRChooseOperatorActivity.this, mDeviceType, mAreaId);
+            }
+        });
+
+        mLocationTv = findViewById(R.id.id_activity_ir_choose_operators_location_tv);
+        findViewById(R.id.id_activity_ir_choose_operators_set_location_tv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ChooseAreaDialog(IRChooseOperatorActivity.this).show();
+            }
+        });
+
+    }
+
+    private void loadCurrentLocation() {
+
+        LocationUtil.getLocation(this, new LocationUtil.OnLocationListener() {
+            @Override
+            public void onLocationGet(double latitude, double longitude, String countryCode, String country, String province, String city, String district) {
+                IRUtils.setArea(province, city, district);
+                updateLocation();
+                loadOperators();
+            }
+        });
+    }
+
+
+    private void updateLocation() {
+        mLocationTv.setText(IRUtils.getProvince() + "" + IRUtils.getCity());
     }
 
 

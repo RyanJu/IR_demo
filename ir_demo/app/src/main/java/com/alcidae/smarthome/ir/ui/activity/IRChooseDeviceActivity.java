@@ -99,12 +99,12 @@ public class IRChooseDeviceActivity extends Activity implements View.OnClickList
         mDeviceItems.add(new ItemBean(Device.TV, R.drawable.ir_tv, R.string.ir_tv));
         mDeviceItems.add(new ItemBean(Device.STB, R.drawable.ir_stb, R.string.ir_stb));
         mDeviceItems.add(new ItemBean(Device.BOX, R.drawable.ir_net_box_1, R.string.ir_net_box));
-        mDeviceItems.add(new ItemBean(Device.DVD, R.drawable.ir_dvd, R.string.ir_dvd));
-        mDeviceItems.add(new ItemBean(Device.PA, R.drawable.ir_amplifer, R.string.ir_amplifer));
-        mDeviceItems.add(new ItemBean(Device.PRO, R.drawable.ir_projector, R.string.ir_projector));
-        mDeviceItems.add(new ItemBean(Device.FAN, R.drawable.ir_fan_1, R.string.ir_fan));
-        mDeviceItems.add(new ItemBean(Device.LIGHT, R.drawable.ir_bumlb, R.string.ir_bulb));
-        mDeviceItems.add(new ItemBean(Device.AIR_CLEANER, R.drawable.ir_air_clean, R.string.ir_air_clean));
+//        mDeviceItems.add(new ItemBean(Device.DVD, R.drawable.ir_dvd, R.string.ir_dvd));
+//        mDeviceItems.add(new ItemBean(Device.PA, R.drawable.ir_amplifer, R.string.ir_amplifer));
+//        mDeviceItems.add(new ItemBean(Device.PRO, R.drawable.ir_projector, R.string.ir_projector));
+//        mDeviceItems.add(new ItemBean(Device.FAN, R.drawable.ir_fan_1, R.string.ir_fan));
+//        mDeviceItems.add(new ItemBean(Device.LIGHT, R.drawable.ir_bumlb, R.string.ir_bulb));
+//        mDeviceItems.add(new ItemBean(Device.AIR_CLEANER, R.drawable.ir_air_clean, R.string.ir_air_clean));
 
     }
 

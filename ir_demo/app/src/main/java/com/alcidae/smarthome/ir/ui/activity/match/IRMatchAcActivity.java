@@ -60,6 +60,16 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
         loadID();
     }
 
+    @Override
+    protected void onClickVolumeUp() {
+        //not use
+    }
+
+    @Override
+    protected void onClickVolumeDown() {
+        //not use
+    }
+
     private void loadID() {
         KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new IRequestResult<RemoteList>() {
             @Override
@@ -84,7 +94,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void loadIRData() {
-        KookongSDK.getIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new IRequestResult<IrDataList>() {
+        KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new IRequestResult<IrDataList>() {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
@@ -112,22 +122,22 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void updateTitle() {
-        setTitle((mCurrentIdIndex + 1) + "/" + mRemoteIds.size());
+        fillTitle((mCurrentIdIndex + 1) + "/" + mRemoteIds.size());
     }
 
     private void updateStep() {
         if (mStep == STEP_ONE_POWER) {
-            mTestIv.setImageResource(R.drawable.selector_power_switch);
-            mTestTv.setText(R.string.power);
+            mCenterButtonIv.setImageResource(R.drawable.selector_power_switch);
+            mCenterButtonHintTv.setText(R.string.ir_power);
         } else if (mStep == STEP_TWO_MODE) {
-            mTestIv.setImageResource(R.drawable.selector_mode);
-            mTestTv.setText(R.string.ir_mode);
+            mCenterButtonIv.setImageResource(R.drawable.selector_mode);
+            mCenterButtonHintTv.setText(R.string.ir_mode);
         } else if (mStep == STEP_THREE_TEMP_UP) {
-            mTestIv.setImageResource(R.drawable.selector_ac_temp_up);
-            mTestTv.setText(R.string.ir_temp);
+            mCenterButtonIv.setImageResource(R.drawable.selector_ac_temp_up);
+            mCenterButtonHintTv.setText(R.string.ir_temp);
         } else if (mStep == STEP_FOUR_TEMP_DOWN) {
-            mTestIv.setImageResource(R.drawable.selector_ac_temp_down);
-            mTestTv.setText(R.string.ir_temp);
+            mCenterButtonIv.setImageResource(R.drawable.selector_ac_temp_down);
+            mCenterButtonHintTv.setText(R.string.ir_temp);
         }
     }
 
@@ -200,7 +210,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
                     InputNameDialog myDialog = (InputNameDialog) dialog;
                     dialog.dismiss();
                     EventBus.getDefault().post(
-                            new EventMatchSuccess(IRUtils.saveMatchedRemoteBean(mCurrentIRData.fre, mBrand, mDeviceType, mRemoteIds.get(mCurrentIdIndex),
+                            new EventMatchSuccess(IRUtils.saveMatchedACRemoteBean(mCurrentIRData.fre, mBrand, mDeviceType, mRemoteIds.get(mCurrentIdIndex),
                                     mAcManager.getACStateV2InString(), myDialog.getInput(), mCurrentIRData.exts, mCurrentIRData.keys)));
                     IRMatchAcActivity.this.finish();
                 }

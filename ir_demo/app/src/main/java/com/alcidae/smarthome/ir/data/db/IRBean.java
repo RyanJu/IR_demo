@@ -41,10 +41,51 @@ public class IRBean {
     //stb type : 0 normal stb,1 iptv
     int spType;
 
+    String spName;
+
     //IPTV运营商下有多个合作公司生产的iptv盒子，bid表示该公司品牌盒子的id
-    int bid;
+    int stb_bid;
+    String stb_bname;
 
+    public String getSpName() {
+        return spName;
+    }
 
+    public void setSpName(String spName) {
+        this.spName = spName;
+    }
+
+    public int getSpId() {
+        return spId;
+    }
+
+    public void setSpId(int spId) {
+        this.spId = spId;
+    }
+
+    public int getSpType() {
+        return spType;
+    }
+
+    public void setSpType(int spType) {
+        this.spType = spType;
+    }
+
+    public int getStb_bid() {
+        return stb_bid;
+    }
+
+    public void setStb_bid(int stb_bid) {
+        this.stb_bid = stb_bid;
+    }
+
+    public String getStb_bname() {
+        return stb_bname;
+    }
+
+    public void setStb_bname(String stb_bname) {
+        this.stb_bname = stb_bname;
+    }
 
     public ArrayList<IrData.IrKey> getKeys() {
         return keys;
@@ -136,6 +177,11 @@ public class IRBean {
                 ", deviceType=" + deviceType +
                 ", remoteId=" + remoteId +
                 ", customName='" + customName + '\'' +
+                ", spId=" + spId +
+                ", spType=" + spType +
+                ", spName='" + spName + '\'' +
+                ", stb_bid=" + stb_bid +
+                ", stb_bname='" + stb_bname + '\'' +
                 '}';
     }
 }

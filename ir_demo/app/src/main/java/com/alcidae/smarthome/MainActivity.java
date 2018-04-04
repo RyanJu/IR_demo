@@ -15,16 +15,19 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.alcidae.smarthome.ir.IRUtils;
+import com.alcidae.smarthome.ir.data.AreaBean;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.alcidae.smarthome.ir.ui.activity.IRChooseDeviceActivity;
+import com.alcidae.smarthome.ir.util.LocationUtil;
 import com.hzy.tvmao.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 //对接实现，首页点击保存的遥控图标，显示遥控界面
-                IRUtils.newRemoteDialog(MainActivity.this,mBeans.get(position)).show();
+                IRUtils.newRemoteDialog(MainActivity.this, mBeans.get(position)).show();
             }
         });
         loadFromDb();
@@ -112,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
     public void onMessageEvent(EventSendIR event) {
         //you should send this ir data
         LogUtil.i("send ir " + event);
-        ConsumerIrManager manager = (ConsumerIrManager) getSystemService(Context.CONSUMER_IR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            manager.transmit(event.getFrequency(), event.getIrDataArray());
-        }
+//        ConsumerIrManager manager = (ConsumerIrManager) getSystemService(Context.CONSUMER_IR_SERVICE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            manager.transmit(event.getFrequency(), event.getIrDataArray());
+//        }
     }
 
 

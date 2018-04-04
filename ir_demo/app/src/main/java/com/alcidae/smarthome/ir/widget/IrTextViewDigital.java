@@ -18,18 +18,18 @@ import android.widget.TextView;
  * @updateTime 2018/3/28 9:24
  */
 
-public class MyTextViewDigital extends android.support.v7.widget.AppCompatTextView {
-    public MyTextViewDigital(Context context) {
+public class IrTextViewDigital extends android.support.v7.widget.AppCompatTextView {
+    public IrTextViewDigital(Context context) {
         super(context);
         initTypeFace();
     }
 
-    public MyTextViewDigital(Context context, @Nullable AttributeSet attrs) {
+    public IrTextViewDigital(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initTypeFace();
     }
 
-    public MyTextViewDigital(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IrTextViewDigital(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTypeFace();
     }

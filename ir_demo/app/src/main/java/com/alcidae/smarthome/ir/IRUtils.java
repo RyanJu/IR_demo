@@ -6,12 +6,15 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.db.DbUtil;
 import com.alcidae.smarthome.ir.data.db.IRBean;
-import com.alcidae.smarthome.ir.ui.dialog.AcRemoteControllerDialog;
+import com.alcidae.smarthome.ir.ui.dialog.RemoteACDialog;
+import com.alcidae.smarthome.ir.ui.dialog.RemoteBoxDialog;
+import com.alcidae.smarthome.ir.ui.dialog.RemoteSTBDialog;
+import com.alcidae.smarthome.ir.ui.dialog.RemoteTVDialog;
+import com.alcidae.smarthome.ir.util.LocationUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -20,6 +23,8 @@ import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
+import com.kookong.app.data.SpList;
+import com.kookong.app.data.StbList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,9 +50,9 @@ public class IRUtils {
     private static final String IR_SP_NAME = "IR_SP";
     private static Context sContext;
 
-    private static String sProvince = "广东省";
-    private static String sCity = "深圳市";
-    private static String sArea = "南山区";
+    private static String sProvince = "";
+    private static String sCity = "";
+    private static String sArea = "";
 
     public static void init(Context context) {
         sContext = context.getApplicationContext();
@@ -122,8 +127,12 @@ public class IRUtils {
         return resources.getString(res);
     }
 
-    public static IRBean saveMatchedRemoteBean(int frequency, BrandList.Brand brand, int deviceType, int remoteId, String accStateString, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
-        return DbUtil.saveMatchedRemoteBean(sContext, frequency, brand, deviceType, remoteId, accStateString, customName, exts, keys);
+    public static IRBean saveMatchedACRemoteBean(int frequency, BrandList.Brand brand, int deviceType, int remoteId, String accStateString, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
+        return DbUtil.saveMatchedRemoteBean(sContext, frequency, brand, null, null, deviceType, remoteId, accStateString, customName, exts, keys);
+    }
+
+    public static IRBean saveMatchedStbRemoteBean(int frequency, SpList.Sp sp, StbList.Stb stb, int deviceType, int remoteId, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
+        return DbUtil.saveMatchedRemoteBean(sContext, frequency, null, sp, stb, deviceType, remoteId, "", customName, exts, keys);
     }
 
     public static List<IRBean> getIrBeans() {
@@ -135,11 +144,24 @@ public class IRUtils {
             return null;
         }
 
-        if (bean.getDeviceType() == Device.AC) {
-            return new AcRemoteControllerDialog(context, bean);
-        } else {
-            return new Dialog(context);
+        Dialog dialog = null;
+        switch (bean.getDeviceType()) {
+            case Device.AC:
+                dialog = new RemoteACDialog(context, bean);
+                break;
+            case Device.STB:
+                dialog = new RemoteSTBDialog(context, bean);
+                break;
+            case Device.BOX:
+                dialog = new RemoteBoxDialog(context, bean);
+                break;
+            case Device.TV:
+                dialog = new RemoteTVDialog(context, bean);
+                break;
+            default:
+                dialog = new Dialog(context);
         }
+        return dialog;
     }
 
     public static void getIRData(int deviceType, int remoteId, final IRequestResult<IrDataList> result) {
@@ -200,4 +222,36 @@ public class IRUtils {
         }
         return null;
     }
+
+    public static int[] searchKeyCodeIR(IrData irData, int keyCode) {
+        if (irData == null || irData.keys == null || irData.keys.isEmpty())
+            return null;
+        final ArrayList<IrData.IrKey> keys = irData.keys;
+        IrData.IrKey key = null;
+        for (int i = 0; i < keys.size(); i++) {
+            key = keys.get(i);
+            if (key.fid == keyCode) {
+                return parsePulse(key.pulse);
+            }
+        }
+        return null;
+    }
+
+    private static int[] parsePulse(String pulse) {
+        if (TextUtils.isEmpty(pulse)) {
+            return null;
+        }
+        try {
+            String[] split = pulse.split(",");
+            int[] result = new int[split.length];
+            for (int i = 0; i < split.length; i++) {
+                result[i] = Integer.parseInt(split[i]);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

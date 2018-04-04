@@ -16,7 +16,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

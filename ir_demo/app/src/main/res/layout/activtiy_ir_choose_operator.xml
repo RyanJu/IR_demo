@@ -16,21 +16,22 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/ir_choose_operator" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
+            android:id="@+id/id_activity_ir_choose_operators_set_location_tv"
             style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:text="@string/manual_choose"
+            android:text="@string/ir_manual_choose"
             android:textColor="@color/color_222222"
             android:textSize="12sp" />
     </RelativeLayout>
@@ -56,12 +57,12 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ir_ic_search" />
 
-            <com.alcidae.smarthome.ir.widget.MyTextView
+            <com.alcidae.smarthome.ir.widget.IrTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
-                android:text="@string/search_for_your_operator"
+                android:text="@string/ir_search_for_your_stb"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -82,12 +83,13 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ir_location" />
 
-            <com.alcidae.smarthome.ir.widget.MyTextView
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:id="@+id/id_activity_ir_choose_operators_location_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
                 android:text="location"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp" />
@@ -100,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ir_bg_white" />
-    <com.alcidae.smarthome.ir.widget.MyTextView
+    <com.alcidae.smarthome.ir.widget.IrTextView
         android:layout_marginLeft="15dp"
         android:layout_marginTop="8dp"
         android:textSize="14sp"

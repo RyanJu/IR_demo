@@ -7,10 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,9 +60,11 @@ import java.util.List;
 public class IRChooseBrandActivity extends Activity implements View.OnClickListener {
     private int mDeviceType;
     private RecyclerView mBrandRv;
-    private EditText mSearchEt;
+    private AutoCompleteTextView mSearchEt;
 
     private List<ItemBean> mItems;
+
+    private List<SearchItem> mSearchBrands = new ArrayList<>();
 
     public static void launch(Activity activity, int deviceType, int requestCode) {
         Intent intent = new Intent(activity, IRChooseBrandActivity.class);
@@ -97,6 +107,8 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
 
                 addBrands(brandList.hotCount, brandList.brandList);
                 refreshItems();
+
+                setAutoComplete(brandList);
             }
 
             @Override
@@ -106,12 +118,61 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         });
     }
 
+    private void setAutoComplete(BrandList brandList) {
+        if (brandList != null && brandList.brandList != null) {
+            mSearchBrands.clear();
+            for (BrandList.Brand brand : brandList.brandList) {
+                mSearchBrands.add(new SearchItem(brand, brand.ename));
+            }
+            ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
+        }
+    }
+
     private void initViews() {
         findViewById(R.id.id_dialog_choose_brand_back_iv)
                 .setOnClickListener(this);
         this.mBrandRv = findViewById(R.id.id_dialog_choose_brand_rv);
         this.mSearchEt = findViewById(R.id.id_dialog_choose_brand_search_tv);
         mBrandRv.setLayoutManager(new LinearLayoutManager(this));
+
+        mSearchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        final ArrayAdapter searchAdapter = new ArrayAdapter(this, R.layout.adapter_ir_search, R.id.id_adapter_ir_search_tv, mSearchBrands);
+        mSearchEt.setAdapter(searchAdapter);
+
+        mSearchEt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtil.i("onItemClick " + position);
+                ArrayAdapter adapter = (ArrayAdapter) parent.getAdapter();
+                SearchItem searchItem = (SearchItem) adapter.getItem(position);
+                IRMatchBaseActivity.launchCommon(IRChooseBrandActivity.this,
+                        100, mDeviceType, (BrandList.Brand) searchItem.obj);
+            }
+        });
+
+    }
+
+    private void searchForBrands() {
+        String text = mSearchEt.getText().toString();
+        KookongSDK.getBrandListFromNet(mDeviceType, new IRequestResult<BrandList>() {
+            @Override
+            public void onSuccess(String s, BrandList brandList) {
+                LogUtil.i("searchForBrands " + brandList.brandList);
+            }
+
+            @Override
+            public void onFail(Integer integer, String s) {
+                LogUtil.i("searchForBrands onFail " + integer + " " + s);
+            }
+        });
     }
 
     private void refreshItems() {
@@ -124,6 +185,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
                         100, mDeviceType, data);
             }
         });
+
     }
 
     private void addBrands(int hotCount, List<BrandList.Brand> brandList) {
@@ -284,4 +346,21 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             }
         }
     }
+
+
+    private static class SearchItem {
+        Object obj;
+        String text;
+
+        public SearchItem(Object obj, String text) {
+            this.obj = obj;
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
 }

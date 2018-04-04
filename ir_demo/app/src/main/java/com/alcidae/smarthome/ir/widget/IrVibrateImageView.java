@@ -22,14 +22,14 @@ import java.util.Random;
  * @updateTime 2018/3/28 10:30
  */
 
-public class MyVibrateImageView extends android.support.v7.widget.AppCompatImageView {
+public class IrVibrateImageView extends android.support.v7.widget.AppCompatImageView {
     private Vibrator mVibrator = null;
 
 
     private Handler mAsyncHandler;
     private HandlerThread mht;
 
-    public MyVibrateImageView(Context context) {
+    public IrVibrateImageView(Context context) {
         super(context);
         init();
     }
@@ -60,12 +60,12 @@ public class MyVibrateImageView extends android.support.v7.widget.AppCompatImage
         mht.quit();
     }
 
-    public MyVibrateImageView(Context context, @Nullable AttributeSet attrs) {
+    public IrVibrateImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public MyVibrateImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IrVibrateImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

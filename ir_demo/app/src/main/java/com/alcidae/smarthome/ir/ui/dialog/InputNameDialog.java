@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.alcidae.smarthome.R;
+import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
 
 /**
@@ -33,10 +35,9 @@ public class InputNameDialog extends BaseFloatDialog {
         initView();
     }
 
-    public String getInput(){
+    public String getInput() {
         return mInputEt.getText().toString();
     }
-
 
 
     private void initView() {
@@ -46,7 +47,7 @@ public class InputNameDialog extends BaseFloatDialog {
         mCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (clickListener!=null){
+                if (clickListener != null) {
                     clickListener.onClick(InputNameDialog.this, DialogInterface.BUTTON_NEGATIVE);
                 }
             }
@@ -55,7 +56,12 @@ public class InputNameDialog extends BaseFloatDialog {
         mOkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (clickListener!=null){
+                if (TextUtils.isEmpty(mInputEt.getText().toString())) {
+                    ToastUtil.toast(getContext(), R.string.ir_empty_name);
+                    return;
+                }
+
+                if (clickListener != null) {
                     clickListener.onClick(InputNameDialog.this, DialogInterface.BUTTON_POSITIVE);
                 }
             }

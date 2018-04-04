@@ -16,7 +16,7 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             android:id="@+id/id_activity_ir_match_test_title_tv"
             style="@style/TitleText"
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/shape_ir_match_round">
 
-            <com.alcidae.smarthome.ir.widget.MyVibrateImageView
+            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
                 android:id="@+id/id_activity_ir_match_test_btn_iv"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
@@ -54,53 +54,46 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ir_sound_default" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="vertical">
 
-                <com.alcidae.smarthome.ir.widget.MyTextView
+                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                        android:id="@+id/id_activity_ir_match_test_volume_up_view"
+                        style="@style/DialogIconStyle"
+                        android:src="@drawable/selector_volume_up" />
+
+                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                        android:id="@+id/id_activity_ir_match_test_volume_down_view"
+                        style="@style/DialogIconStyle"
+                        android:src="@drawable/selector_volume_down" />
+
+                </LinearLayout>
+
+                <com.alcidae.smarthome.ir.widget.IrTextView
+                    style="@style/DialogTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:ellipsize="middle"
-                    android:singleLine="true"
-                    android:text="@string/ir_volume"
-                    android:textColor="@color/color_666666"
-                    android:textSize="12sp" />
+                    android:text="@string/ir_volume" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <com.alcidae.smarthome.ir.widget.MyVibrateImageView
-                        android:id="@+id/id_activity_ir_match_test_volume_up_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <com.alcidae.smarthome.ir.widget.MyVibrateImageView
-                        android:id="@+id/id_activity_ir_match_test_volume_down_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-                </LinearLayout>
             </RelativeLayout>
+
         </RelativeLayout>
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             android:id="@+id/id_activity_ir_match_test_btn_text_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:text="@string/power"
+            android:text="@string/ir_power"
             android:textColor="@color/color_0acc7a"
             android:textSize="17sp" />
 
-        <com.alcidae.smarthome.ir.widget.MyTextView
+        <com.alcidae.smarthome.ir.widget.IrTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="37dp"
@@ -116,7 +109,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.alcidae.smarthome.ir.widget.MyButton
+            <com.alcidae.smarthome.ir.widget.IrButton
                 android:id="@+id/id_activity_ir_match_test_no_btn"
                 android:layout_width="143dp"
                 android:layout_height="44dp"
@@ -124,9 +117,9 @@
                 android:layout_marginBottom="50dp"
                 android:layout_marginLeft="40dp"
                 android:background="@drawable/selector_button_round"
-                android:text="@string/no" />
+                android:text="@string/ir_no" />
 
-            <com.alcidae.smarthome.ir.widget.MyButton
+            <com.alcidae.smarthome.ir.widget.IrButton
                 android:id="@+id/id_activity_ir_match_test_yes_btn"
                 android:layout_width="143dp"
                 android:layout_height="44dp"
@@ -135,7 +128,7 @@
                 android:layout_marginBottom="50dp"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/selector_button_round"
-                android:text="@string/yes" />
+                android:text="@string/ir_yes" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

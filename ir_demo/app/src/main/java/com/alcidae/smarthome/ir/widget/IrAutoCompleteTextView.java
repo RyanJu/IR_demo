@@ -3,32 +3,32 @@ package com.alcidae.smarthome.ir.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 
 /**
  * Create By zhurongkun
  *
  * @author zhurongkun
- * @version 2018/3/27 18:33 1.0
- * @time 2018/3/27 18:33
+ * @version 2018/4/4 13:52 1.0
+ * @time 2018/4/4 13:52
  * @project ir_demo com.alcidae.smarthome.ir.widget
  * @description
  * @updateVersion 1.0
- * @updateTime 2018/3/27 18:33
+ * @updateTime 2018/4/4 13:52
  */
 
-public class MyButton extends android.support.v7.widget.AppCompatButton {
-    public MyButton(Context context) {
+public class IrAutoCompleteTextView extends android.support.v7.widget.AppCompatAutoCompleteTextView {
+    public IrAutoCompleteTextView(Context context) {
         super(context);
         initTypeFace();
     }
 
-    public MyButton(Context context, AttributeSet attrs) {
+    public IrAutoCompleteTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initTypeFace();
     }
 
-    public MyButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public IrAutoCompleteTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTypeFace();
     }
@@ -37,5 +37,4 @@ public class MyButton extends android.support.v7.widget.AppCompatButton {
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font/pingfang_medium.ttf");
         setTypeface(tf);
     }
-
 }

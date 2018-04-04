@@ -3,32 +3,32 @@ package com.alcidae.smarthome.ir.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.EditText;
+import android.widget.Button;
 
 /**
  * Create By zhurongkun
  *
  * @author zhurongkun
- * @version 2018/3/27 18:32 1.0
- * @time 2018/3/27 18:32
+ * @version 2018/3/27 18:33 1.0
+ * @time 2018/3/27 18:33
  * @project ir_demo com.alcidae.smarthome.ir.widget
  * @description
  * @updateVersion 1.0
- * @updateTime 2018/3/27 18:32
+ * @updateTime 2018/3/27 18:33
  */
 
-public class MyEditText extends android.support.v7.widget.AppCompatEditText {
-    public MyEditText(Context context) {
+public class IrButton extends android.support.v7.widget.AppCompatButton {
+    public IrButton(Context context) {
         super(context);
         initTypeFace();
     }
 
-    public MyEditText(Context context, AttributeSet attrs) {
+    public IrButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initTypeFace();
     }
 
-    public MyEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public IrButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initTypeFace();
     }

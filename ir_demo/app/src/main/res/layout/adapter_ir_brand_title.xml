@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/color_f8f8f8">
 
-    <com.alcidae.smarthome.ir.widget.MyTextView
+    <com.alcidae.smarthome.ir.widget.IrTextView
         android:id="@+id/id_adapter_ir_brand_item_tv"
         android:layout_width="wrap_content"
         android:layout_height="35dp"

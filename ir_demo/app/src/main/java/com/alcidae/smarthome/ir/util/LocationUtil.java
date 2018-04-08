@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,6 +41,9 @@ import java.util.Locale;
  */
 
 public class LocationUtil {
+
+    private static AreaBean sAreaBean = null;
+
     public static Address getAddress(Context context, double latitude, double lontitude) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         List<Address> addresses = geocoder.getFromLocation(latitude, lontitude, 10);
@@ -51,6 +55,9 @@ public class LocationUtil {
 
 
     public static AreaBean readAreas(Context context) throws IOException {
+        if (sAreaBean != null ) {
+            return sAreaBean;
+        }
         AssetManager assets = context.getAssets();
         InputStream inputStream = assets.open("cities.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -60,7 +67,7 @@ public class LocationUtil {
             jsonBuilder.append(line).append(" ");
         }
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonBuilder.toString(), AreaBean.class);
+        return sAreaBean = mapper.readValue(jsonBuilder.toString(), AreaBean.class);
     }
 
     //use android location tool

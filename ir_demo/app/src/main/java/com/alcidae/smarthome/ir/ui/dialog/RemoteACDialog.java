@@ -13,6 +13,7 @@ import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
 import com.hzy.tvmao.KKACManagerV2;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -82,7 +83,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
     }
 
     private void loadIrData() {
-        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new IRequestResult<IrDataList>() {
+        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpeIRequestResult<IrDataList>(getContext()) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
@@ -90,11 +91,6 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
                     mAcManger.initIRData(mIrData.rid, mIrData.exts, mIrData.keys);
                     mAcManger.setACStateV2FromString(mIrBean.getAccState());
                 }
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                Toast.makeText(getContext(), R.string.ir_error_network, Toast.LENGTH_SHORT).show();
             }
         });
     }

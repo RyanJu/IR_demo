@@ -25,6 +25,7 @@ import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.ui.dialog.ChooseAreaDialog;
 import com.alcidae.smarthome.ir.util.LocationUtil;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
@@ -37,6 +38,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -94,30 +96,25 @@ public class IRChooseOperatorActivity extends Activity {
             ToastUtil.toast(this, R.string.ir_error_area);
             return;
         }
-        KookongSDK.getAreaId(IRUtils.getProvince(), IRUtils.getCity(), IRUtils.getArea(), new IRequestResult<Integer>() {
+        KookongSDK.getAreaId(IRUtils.getProvince(), IRUtils.getCity(), IRUtils.getArea(),new SimpeIRequestResult<Integer>(this){
+
             @Override
             public void onSuccess(String s, Integer integer) {
                 LogUtil.i("getAreaId " + s + " ," + integer);
                 mAreaId = integer;
-                KookongSDK.getOperaters(mAreaId, new IRequestResult<SpList>() {
+                KookongSDK.getOperaters(mAreaId, new SimpeIRequestResult<SpList>(IRChooseOperatorActivity.this) {
                     @Override
                     public void onSuccess(String s, SpList spList) {
                         if (spList != null && spList.spList != null) {
                             mOperators = spList.spList;
                             refreshView();
+                        } else {
+                            mOperators = new ArrayList<>();
+                            refreshView();
                         }
                     }
 
-                    @Override
-                    public void onFail(Integer integer, String s) {
-
-                    }
                 });
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                ToastUtil.toast(IRChooseOperatorActivity.this, R.string.ir_error_area);
             }
         });
 
@@ -169,7 +166,17 @@ public class IRChooseOperatorActivity extends Activity {
         findViewById(R.id.id_activity_ir_choose_operators_set_location_tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ChooseAreaDialog(IRChooseOperatorActivity.this).show();
+                ChooseAreaDialog dialog = new ChooseAreaDialog(IRChooseOperatorActivity.this);
+                dialog.show();
+                dialog.setProvinceAndCity(IRUtils.getProvince(), IRUtils.getCity());
+                dialog.setOnAreaSelectListener(new ChooseAreaDialog.OnAreaSelectListener() {
+                    @Override
+                    public void onSelecteArea(String province, String city) {
+                        IRUtils.setArea(province, city, city);
+                        updateLocation();
+                        loadOperators();
+                    }
+                });
             }
         });
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
@@ -88,7 +89,7 @@ public class IRSearchStbActivity extends Activity implements SimpleOnItemClickLi
     }
 
     private void doSearch(String word) {
-        KookongSDK.searchSTB(word, mAreaId, new IRequestResult<StbList>() {
+        KookongSDK.searchSTB(word, mAreaId, new SimpeIRequestResult<StbList>(this) {
             @Override
             public void onSuccess(String s, StbList stbList) {
                 LogUtil.i("searchSTB onSuccess ");
@@ -96,11 +97,6 @@ public class IRSearchStbActivity extends Activity implements SimpleOnItemClickLi
                 SearchStbAdapter searchStbAdapter = new SearchStbAdapter(IRSearchStbActivity.this, mStbs);
                 mStbRv.setAdapter(searchStbAdapter);
                 searchStbAdapter.setOnItemClickListener(IRSearchStbActivity.this);
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                ToastUtil.toast(IRSearchStbActivity.this, R.string.ir_search_failed);
             }
         });
     }

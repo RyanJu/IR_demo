@@ -62,5 +62,6 @@
     <string name="ir_search_for_your_stb">Search STB</string>
     <string name="ir_search_failed">No such STBs!</string>
     <string name="ir_choose_area">Choose Area</string>
+    <string name="ir_error_key">App inner error.</string>
 
 </resources>

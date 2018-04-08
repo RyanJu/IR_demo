@@ -12,6 +12,7 @@ import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -72,7 +73,7 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
     protected void loadTestData() {
         if (mRemoteIds != null && !mRemoteIds.isEmpty() && mCurrentIdPosition < mRemoteIds.size()) {
             int rid = mRemoteIds.get(mCurrentIdPosition);
-            KookongSDK.testIRDataById(String.valueOf(rid), mDeviceType, new IRequestResult<IrDataList>() {
+            KookongSDK.testIRDataById(String.valueOf(rid), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {
                     LogUtil.i("testIRDataById succ " + irDataList.getIrDataList().size());
@@ -84,10 +85,6 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
                     }
                 }
 
-                @Override
-                public void onFail(Integer integer, String s) {
-                    ToastUtil.toast(IRMatchStbIPTVActivity.this, R.string.ir_error_network);
-                }
             });
         }
     }
@@ -176,7 +173,7 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
                     InputNameDialog myDialog = (InputNameDialog) dialog;
                     dialog.dismiss();
                     EventBus.getDefault().post(
-                            new EventMatchSuccess(IRUtils.saveMatchedStbRemoteBean(mIrData.fre, mSp, mStb, mDeviceType, mRemoteIds.get(mCurrentIdPosition), myDialog.getInput(), mIrData.exts, mIrData.keys)));
+                            new EventMatchSuccess(IRUtils.saveMatchedNonACRemoteBean(mIrData.fre, mSp, mStb, mDeviceType, mRemoteIds.get(mCurrentIdPosition), myDialog.getInput(), mIrData.exts, mIrData.keys)));
                     IRMatchStbIPTVActivity.this.finish();
                 }
             }

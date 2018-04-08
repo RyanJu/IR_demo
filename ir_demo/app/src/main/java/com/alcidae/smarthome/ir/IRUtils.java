@@ -4,7 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.alcidae.smarthome.R;
@@ -14,7 +18,7 @@ import com.alcidae.smarthome.ir.ui.dialog.RemoteACDialog;
 import com.alcidae.smarthome.ir.ui.dialog.RemoteBoxDialog;
 import com.alcidae.smarthome.ir.ui.dialog.RemoteSTBDialog;
 import com.alcidae.smarthome.ir.ui.dialog.RemoteTVDialog;
-import com.alcidae.smarthome.ir.util.LocationUtil;
+import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -30,6 +34,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Create By zhurongkun
@@ -46,8 +52,9 @@ import java.util.List;
 public class IRUtils {
 
     private static final String key = "36C9647F80C96B0214EF3F912B6250A2";
-    private static final String irDeviceId = "1";
+    private static String irDeviceId = null;
     private static final String IR_SP_NAME = "IR_SP";
+    private static final String IR_DEVICE_KYE = "device";
     private static Context sContext;
 
     private static String sProvince = "";
@@ -56,9 +63,40 @@ public class IRUtils {
 
     public static void init(Context context) {
         sContext = context.getApplicationContext();
+        if (irDeviceId == null) {
+            irDeviceId = getSp().getString(IR_DEVICE_KYE, null);
+            if (irDeviceId == null) {
+                getSp().edit().putString(IR_DEVICE_KYE, irDeviceId = newDeviceID(sContext)).apply();
+            }
+        }
         boolean result = KookongSDK.init(context.getApplicationContext(), key, irDeviceId);
         LogUtil.d("Verify result is " + result);
         KookongSDK.setDebugMode(true);
+    }
+
+    private static String newDeviceID(Context sContext) {
+        StringBuilder idBuilder = new StringBuilder("IR");
+        TelephonyManager manager = (TelephonyManager) sContext.getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = "";
+        if (manager != null) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    imei = manager.getImei();
+                } else {
+                    imei = manager.getDeviceId();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        idBuilder.append(imei);
+
+        UUID uuid = UUID.randomUUID();
+        if (uuid != null) {
+            idBuilder.append(uuid.toString());
+        }
+
+        return idBuilder.toString();
     }
 
     /**
@@ -131,7 +169,7 @@ public class IRUtils {
         return DbUtil.saveMatchedRemoteBean(sContext, frequency, brand, null, null, deviceType, remoteId, accStateString, customName, exts, keys);
     }
 
-    public static IRBean saveMatchedStbRemoteBean(int frequency, SpList.Sp sp, StbList.Stb stb, int deviceType, int remoteId, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
+    public static IRBean saveMatchedNonACRemoteBean(int frequency, SpList.Sp sp, StbList.Stb stb, int deviceType, int remoteId, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
         return DbUtil.saveMatchedRemoteBean(sContext, frequency, null, sp, stb, deviceType, remoteId, "", customName, exts, keys);
     }
 
@@ -169,7 +207,7 @@ public class IRUtils {
             return;
         }
         final String key = String.valueOf(deviceType) + "_" + String.valueOf(remoteId);
-        final SharedPreferences sp = sContext.getSharedPreferences(IR_SP_NAME, Context.MODE_PRIVATE);
+        final SharedPreferences sp = getSp();
         if (sContext != null) {
             String saved = sp.getString(key, "");
             if (!TextUtils.isEmpty(saved)) {
@@ -201,6 +239,10 @@ public class IRUtils {
             }
         });
 
+    }
+
+    private static SharedPreferences getSp() {
+        return sContext.getSharedPreferences(IR_SP_NAME, Context.MODE_PRIVATE);
     }
 
     public static String toJson(Object target) {
@@ -254,4 +296,24 @@ public class IRUtils {
         return null;
     }
 
+    public static String getBrandNameByLocale(BrandList.Brand brand) {
+        if (brand == null) return "";
+
+        if (sContext == null) return "";
+
+        Locale locale = Locale.getDefault();
+        if (Locale.CHINA.getLanguage().equals(locale.getLanguage())) {
+            return brand.cname;
+        }
+        return brand.ename;
+    }
+
+    public static void handleError(Context context,int code) {
+        int errorRes = R.string.ir_error_network;
+        switch (code){
+            case 1://
+                break;
+        }
+        ToastUtil.toast(context,errorRes);
+    }
 }

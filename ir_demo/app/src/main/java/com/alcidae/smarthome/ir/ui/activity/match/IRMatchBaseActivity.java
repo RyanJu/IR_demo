@@ -180,7 +180,7 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected void fillTitle(String suffix) {
         try {
             String _s = suffix == null ? "" : suffix;
-            mTitleTv.setText(mBrand.ename + " " + IRUtils.deviceTypeToString(this, mDeviceType)
+            mTitleTv.setText(IRUtils.getBrandNameByLocale(mBrand) + " " + IRUtils.deviceTypeToString(this, mDeviceType)
                     + " " + _s);
         } catch (Exception e) {
             e.printStackTrace();

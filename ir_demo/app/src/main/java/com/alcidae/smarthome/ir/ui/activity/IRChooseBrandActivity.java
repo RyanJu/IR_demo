@@ -23,8 +23,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
+import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -100,7 +102,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
 
     private void loadBrands() {
         mItems = new ArrayList<>();
-        KookongSDK.getBrandListFromNet(mDeviceType, new IRequestResult<BrandList>() {
+        KookongSDK.getBrandListFromNet(mDeviceType, new SimpeIRequestResult<BrandList>(this) {
             @Override
             public void onSuccess(String s, BrandList brandList) {
                 LogUtil.i("getBrandListFromNet succ: size-->" + brandList.brandList.size());
@@ -110,11 +112,6 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
 
                 setAutoComplete(brandList);
             }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                LogUtil.e("getBrandListFromNet failed: err-->" + s + ",code-->" + integer);
-            }
         });
     }
 
@@ -122,7 +119,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         if (brandList != null && brandList.brandList != null) {
             mSearchBrands.clear();
             for (BrandList.Brand brand : brandList.brandList) {
-                mSearchBrands.add(new SearchItem(brand, brand.ename));
+                mSearchBrands.add(new SearchItem(brand, IRUtils.getBrandNameByLocale(brand)));
             }
             ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
         }
@@ -158,21 +155,6 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             }
         });
 
-    }
-
-    private void searchForBrands() {
-        String text = mSearchEt.getText().toString();
-        KookongSDK.getBrandListFromNet(mDeviceType, new IRequestResult<BrandList>() {
-            @Override
-            public void onSuccess(String s, BrandList brandList) {
-                LogUtil.i("searchForBrands " + brandList.brandList);
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                LogUtil.i("searchForBrands onFail " + integer + " " + s);
-            }
-        });
     }
 
     private void refreshItems() {
@@ -285,7 +267,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
                 th.mTextTv.setText(itemBean.title);
             } else {
                 BrandHolder bh = (BrandHolder) holder;
-                bh.mTextTv.setText(itemBean.brand.ename);
+                bh.mTextTv.setText(IRUtils.getBrandNameByLocale(itemBean.brand));
             }
         }
 

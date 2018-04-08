@@ -37,6 +37,8 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
     private int mProvinceIndex;
     private int mCityIndex;
     private AreaBean mAreaBean;
+    private OnAreaSelectListener onAreaSelectListener;
+
 
     public ChooseAreaDialog(@NonNull Context context) {
         super(context);
@@ -48,6 +50,37 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
         initView();
         initData();
     }
+
+    public void setProvinceAndCity(String province, String city) {
+        if (mAreaBean != null) {
+            List<AreaBean.Province> provinces = mAreaBean.getProvinces();
+            int pIndex = -1;
+            for (int i = 0, size = provinces.size(); i < size; i++) {
+                AreaBean.Province p = provinces.get(i);
+                if (p.getProvinceName().equals(province)) {
+                    pIndex = i;
+                    break;
+                }
+            }
+
+            if (pIndex != -1) {
+                AreaBean.Province targetProvince = provinces.get(pIndex);
+                mProvinceIndex = pIndex;
+
+                for (int i = 0, size = targetProvince.getCitys().size(); i < size; i++) {
+                    AreaBean.City c = targetProvince.getCitys().get(i);
+                    if (c.getCitysName().equals(city)) {
+                        mCityIndex = i;
+                        break;
+                    }
+                }
+
+                mProvinceNpv.setValue(mProvinceIndex);
+                updateCity();
+            }
+        }
+    }
+
 
     private void initData() {
         try {
@@ -69,10 +102,14 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
         for (int i = 0; i < size; i++) {
             citiesArray[i] = cities.get(i).getCitysName();
         }
-        mCityNpv.refreshByNewDisplayedValues(citiesArray);
-        mCityNpv.setMinValue(0);
-        mCityNpv.setMaxValue(size - 1);
-        mCityNpv.setValue(mCityIndex);
+        try {
+            mCityNpv.refreshByNewDisplayedValues(citiesArray);
+            mCityNpv.setMinValue(0);
+            mCityNpv.setMaxValue(size - 1);
+            mCityNpv.setValue(mCityIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateProvince() {
@@ -82,10 +119,14 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
         for (int i = 0; i < size; i++) {
             provincesArray[i] = provinces.get(i).getProvinceName();
         }
-        mProvinceNpv.refreshByNewDisplayedValues(provincesArray);
-        mProvinceNpv.setMinValue(0);
-        mProvinceNpv.setMaxValue(size - 1);
-        mProvinceNpv.setValue(mProvinceIndex);
+        try {
+            mProvinceNpv.refreshByNewDisplayedValues(provincesArray);
+            mProvinceNpv.setMinValue(0);
+            mProvinceNpv.setMaxValue(size - 1);
+            mProvinceNpv.setValue(mProvinceIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initView() {
@@ -96,10 +137,24 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
         mProvinceNpv.setOnValueChangedListener(new NumberPickerView.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                
+                if (oldVal != newVal) {
+                    mProvinceIndex = newVal;
+                    mCityIndex = 0;
+                    updateCity();
+                }
+            }
+        });
+
+        mCityNpv.setOnValueChangedListener(new NumberPickerView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+                if (oldVal != newVal) {
+                    mCityIndex = newVal;
+                }
             }
         });
     }
+
 
     @Override
     public void onClick(View v) {
@@ -108,8 +163,25 @@ public class ChooseAreaDialog extends BaseFloatDialog implements View.OnClickLis
                 dismiss();
                 break;
             case R.id.id_dialog_choose_area_ensure_iv:
-
+                if (onAreaSelectListener != null) {
+                    AreaBean.Province province = mAreaBean.getProvinces().get(mProvinceIndex);
+                    AreaBean.City city = province.getCitys().get(mCityIndex);
+                    onAreaSelectListener.onSelecteArea(province.getProvinceName(), city.getCitysName());
+                }
+                dismiss();
                 break;
         }
+    }
+
+    public OnAreaSelectListener getOnAreaSelectListener() {
+        return onAreaSelectListener;
+    }
+
+    public void setOnAreaSelectListener(OnAreaSelectListener onAreaSelectListener) {
+        this.onAreaSelectListener = onAreaSelectListener;
+    }
+
+    public interface OnAreaSelectListener {
+        void onSelecteArea(String province, String city);
     }
 }

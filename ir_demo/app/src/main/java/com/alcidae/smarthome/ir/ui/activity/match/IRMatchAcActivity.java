@@ -11,6 +11,7 @@ import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KKACManagerV2;
 import com.hzy.tvmao.KookongSDK;
@@ -71,7 +72,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void loadID() {
-        KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new IRequestResult<RemoteList>() {
+        KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpeIRequestResult<RemoteList>(this) {
             @Override
             public void onSuccess(String s, RemoteList remoteList) {
                 if (remoteList != null && remoteList.rids != null) {
@@ -84,17 +85,11 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
 
                 }
             }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                LogUtil.e("get remote id error:" + integer + " , " + s);
-                ToastUtil.toast(IRMatchAcActivity.this, R.string.ir_error_network);
-            }
         });
     }
 
     private void loadIRData() {
-        KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new IRequestResult<IrDataList>() {
+        KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
@@ -112,11 +107,6 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
                     updateStep();
 
                 }
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-
             }
         });
     }

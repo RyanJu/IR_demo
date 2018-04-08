@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
@@ -84,7 +85,7 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
     }
 
     private void loadAndRefresh() {
-        KookongSDK.getIPTV(mSp.spId, new IRequestResult<StbList>() {
+        KookongSDK.getIPTV(mSp.spId, new SimpeIRequestResult<StbList>(this) {
             @Override
             public void onSuccess(String s, StbList stbList) {
                 mItems = new ArrayList<>();
@@ -92,11 +93,6 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
                 BrandAdapter brandAdapter = new BrandAdapter(IRChooseIPTVBrandActivity.this, mItems);
                 mBrandRv.setAdapter(brandAdapter);
                 brandAdapter.setOnItemClickListener(IRChooseIPTVBrandActivity.this);
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-                ToastUtil.toast(IRChooseIPTVBrandActivity.this, R.string.ir_error_network);
             }
         });
     }

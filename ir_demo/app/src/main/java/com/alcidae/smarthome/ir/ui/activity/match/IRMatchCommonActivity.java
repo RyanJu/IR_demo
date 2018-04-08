@@ -11,6 +11,7 @@ import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -52,7 +53,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
 
     private void loadIds() {
         if (mBrand != null) {
-            KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new IRequestResult<RemoteList>() {
+            KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpeIRequestResult<RemoteList>(this) {
                 @Override
                 public void onSuccess(String s, RemoteList remoteList) {
                     if (remoteList != null && remoteList.rids != null && !remoteList.rids.isEmpty()) {
@@ -61,18 +62,13 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
                         loadIRData();
                     }
                 }
-
-                @Override
-                public void onFail(Integer integer, String s) {
-                    ToastUtil.toast(IRMatchCommonActivity.this, R.string.ir_error_network);
-                }
             });
         }
     }
 
     private void loadIRData() {
         if (mCurrentIdPosition < mRemoteIds.size()) {
-            KookongSDK.testIRDataById(String.valueOf(mRemoteIds.get(mCurrentIdPosition)), mDeviceType, new IRequestResult<IrDataList>() {
+            KookongSDK.testIRDataById(String.valueOf(mRemoteIds.get(mCurrentIdPosition)), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
 
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {
@@ -84,11 +80,6 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
                         updateTitle();
 
                     }
-                }
-
-                @Override
-                public void onFail(Integer integer, String s) {
-
                 }
             });
         }
@@ -166,7 +157,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
                     InputNameDialog myDialog = (InputNameDialog) dialog;
                     dialog.dismiss();
                     EventBus.getDefault().post(
-                            new EventMatchSuccess(IRUtils.saveMatchedStbRemoteBean(mIrData.fre, mSp, mStb, mDeviceType, mRemoteIds.get(mCurrentIdPosition), myDialog.getInput(), mIrData.exts, mIrData.keys)));
+                            new EventMatchSuccess(IRUtils.saveMatchedNonACRemoteBean(mIrData.fre, mSp, mStb, mDeviceType, mRemoteIds.get(mCurrentIdPosition), myDialog.getInput(), mIrData.exts, mIrData.keys)));
                     IRMatchCommonActivity.this.finish();
                 }
             }

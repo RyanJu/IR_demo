@@ -10,6 +10,7 @@ import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.data.db.IRBean;
+import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.widget.IrPadView;
 import com.hzy.tvmao.interf.IRequestResult;
 import com.kookong.app.data.IrData;
@@ -48,15 +49,10 @@ public class RemoteTVDialog extends BaseRemoteDialog implements View.OnClickList
         if (mIrBean == null) {
             return;
         }
-        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new IRequestResult<IrDataList>() {
+        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpeIRequestResult<IrDataList>(getContext()) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 mIrData = irDataList.getIrDataList().get(0);
-            }
-
-            @Override
-            public void onFail(Integer integer, String s) {
-
             }
         });
     }

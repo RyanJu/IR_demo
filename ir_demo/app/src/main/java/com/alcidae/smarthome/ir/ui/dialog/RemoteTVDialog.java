@@ -214,7 +214,7 @@ public class RemoteTVDialog extends BaseRemoteDialog implements View.OnClickList
             EventSendIR event = new EventSendIR();
             event.setDeviceType(mIrBean.getDeviceType());
             event.setRemoteId(mIrBean.getRemoteId());
-            event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, IRConst.KEY.power));
+            event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, keyCode));
             event.setFrequency(mIrData.fre);
             EventBus.getDefault().post(event);
         }

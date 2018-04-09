@@ -124,7 +124,7 @@ public class RemoteBoxDialog extends BaseRemoteDialog implements View.OnClickLis
             EventSendIR event = new EventSendIR();
             event.setDeviceType(mIrBean.getDeviceType());
             event.setRemoteId(mIrBean.getRemoteId());
-            event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, IRConst.KEY.power));
+            event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, keyCode));
             event.setFrequency(mIrData.fre);
             EventBus.getDefault().post(event);
         }

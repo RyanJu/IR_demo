@@ -23,7 +23,7 @@ import com.kookong.app.data.StbList;
  * @version 2018/3/29 11:05 1.0
  * @time 2018/3/29 11:05
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description basic activity of match remote controller,has some common method and fields
  * @updateVersion 1.0
  * @updateTime 2018/3/29 11:05
  */

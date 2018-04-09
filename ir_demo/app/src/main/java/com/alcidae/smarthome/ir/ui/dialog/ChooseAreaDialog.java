@@ -25,7 +25,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * @version 2018/4/4 17:55 1.0
  * @time 2018/4/4 17:55
  * @project ir_demo com.alcidae.smarthome.ir.ui.dialog
- * @description
+ * @description choose area in Activity {@link com.alcidae.smarthome.ir.ui.activity.IRChooseOperatorActivity}
  * @updateVersion 1.0
  * @updateTime 2018/4/4 17:55
  */

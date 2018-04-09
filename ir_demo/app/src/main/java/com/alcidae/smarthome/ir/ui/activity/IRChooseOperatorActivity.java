@@ -49,7 +49,7 @@ import java.util.Locale;
  * @version 2018/3/29 16:30 1.0
  * @time 2018/3/29 16:30
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description choose stb operator,note that stb device is based on operator
  * @updateVersion 1.0
  * @updateTime 2018/3/29 16:30
  */

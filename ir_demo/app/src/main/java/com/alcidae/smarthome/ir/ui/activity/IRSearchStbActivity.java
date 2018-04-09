@@ -34,7 +34,7 @@ import java.util.List;
  * @version 2018/4/4 14:38 1.0
  * @time 2018/4/4 14:38
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description search stb by input
  * @updateVersion 1.0
  * @updateTime 2018/4/4 14:38
  */

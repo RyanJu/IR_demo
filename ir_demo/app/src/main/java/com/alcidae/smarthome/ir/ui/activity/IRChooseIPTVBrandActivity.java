@@ -40,7 +40,7 @@ import java.util.List;
  * @version 2018/4/2 18:07 1.0
  * @time 2018/4/2 18:07
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description IPTV has operator and brand, not like normal stb
  * @updateVersion 1.0
  * @updateTime 2018/4/2 18:07
  */

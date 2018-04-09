@@ -45,7 +45,7 @@ import java.util.Locale;
  * @version 2018/3/26 14:21 1.0
  * @time 2018/3/26 14:21
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description choose a device brand
  * @updateVersion 1.0
  * @updateTime 2018/3/26 14:21
  */

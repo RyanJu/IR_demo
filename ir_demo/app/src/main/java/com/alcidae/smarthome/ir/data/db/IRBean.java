@@ -13,7 +13,7 @@ import java.util.HashMap;
  * @version 2018/3/27 15:59 1.0
  * @time 2018/3/27 15:59
  * @project ir_demo com.alcidae.smarthome.ir.data
- * @description
+ * @description saved ir bean
  * @updateVersion 1.0
  * @updateTime 2018/3/27 15:59
  */
@@ -24,15 +24,36 @@ public class IRBean {
 
     //database id,auto increase
     int id;
+
+    //
     int frequency;
+
+    //brand
     int brandId;
     String brandName;
+
+
     int deviceType;
+
+    //id of the remote data
     int remoteId;
+
+    //custom named
     String customName;
 
+    /**
+     * {@link IrData.exts}
+     */
     HashMap<Integer, String> exts;
+
+    /**
+     * {@link IrData.keys}
+     */
     ArrayList<IrData.IrKey> keys;
+
+    /**
+     * {@link com.hzy.tvmao.KKACManagerV2}
+     */
     String accState;
 
     //stb operator id

@@ -4,10 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -51,25 +50,42 @@ import java.util.UUID;
 
 public class IRUtils {
 
+    /**
+     * sdk key of kookong sdk,can't be modified!
+     */
     private static final String key = "36C9647F80C96B0214EF3F912B6250A2";
-    private static String irDeviceId = null;
+
+    /**
+     * unique id for each phone
+     */
+    private static String sAppId = null;
+
     private static final String IR_SP_NAME = "IR_SP";
+
     private static final String IR_DEVICE_KYE = "device";
+
+    /**
+     * ApplicationContext
+     */
     private static Context sContext;
 
     private static String sProvince = "";
     private static String sCity = "";
     private static String sArea = "";
 
+    /**
+     * initial method ,need to call first
+     * @param context
+     */
     public static void init(Context context) {
         sContext = context.getApplicationContext();
-        if (irDeviceId == null) {
-            irDeviceId = getSp().getString(IR_DEVICE_KYE, null);
-            if (irDeviceId == null) {
-                getSp().edit().putString(IR_DEVICE_KYE, irDeviceId = newDeviceID(sContext)).apply();
+        if (sAppId == null) {
+            sAppId = getSp().getString(IR_DEVICE_KYE, null);
+            if (sAppId == null) {
+                getSp().edit().putString(IR_DEVICE_KYE, sAppId = newDeviceID(sContext)).apply();
             }
         }
-        boolean result = KookongSDK.init(context.getApplicationContext(), key, irDeviceId);
+        boolean result = KookongSDK.init(context.getApplicationContext(), key, sAppId);
         LogUtil.d("Verify result is " + result);
         KookongSDK.setDebugMode(true);
     }
@@ -100,13 +116,12 @@ public class IRUtils {
     }
 
     /**
-     * 需由对接实现，填入当前位置，供机顶盒匹配使用
-     *
+     * saved current area,note that 3rd param is not necessary
      * @param province
      * @param city
      * @param area
      */
-    public static void setArea(String province, String city, String area) {
+    public static void setArea(@NonNull String province,@NonNull String city,@Nullable String area) {
         sProvince = province;
         sCity = city;
         sArea = area;
@@ -124,6 +139,12 @@ public class IRUtils {
         return sArea;
     }
 
+    /**
+     * cast from deviceType integer to string
+     * @param context
+     * @param deviceType
+     * @return
+     */
     public static String deviceTypeToString(Context context, int deviceType) {
         Resources resources = context.getResources();
         int res = 0;
@@ -165,18 +186,53 @@ public class IRUtils {
         return resources.getString(res);
     }
 
+    /**
+     * save a air conditioner matched remote controller to local
+     * @param frequency
+     * @param brand
+     * @param deviceType
+     * @param remoteId
+     * @param accStateString get from KKACManager
+     * @param customName
+     * @param exts
+     * @param keys
+     * @return
+     */
     public static IRBean saveMatchedACRemoteBean(int frequency, BrandList.Brand brand, int deviceType, int remoteId, String accStateString, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
         return DbUtil.saveMatchedRemoteBean(sContext, frequency, brand, null, null, deviceType, remoteId, accStateString, customName, exts, keys);
     }
 
+    /**
+     * save a device(not air conditioner) matched remote controller to local
+     * @param frequency
+     * @param sp
+     * @param stb
+     * @param deviceType
+     * @param remoteId
+     * @param customName
+     * @param exts
+     * @param keys
+     * @return
+     */
     public static IRBean saveMatchedNonACRemoteBean(int frequency, SpList.Sp sp, StbList.Stb stb, int deviceType, int remoteId, String customName, HashMap<Integer, String> exts, ArrayList<IrData.IrKey> keys) {
         return DbUtil.saveMatchedRemoteBean(sContext, frequency, null, sp, stb, deviceType, remoteId, "", customName, exts, keys);
     }
 
+    /**
+     * get saved remote controllers from local
+     * @return
+     */
     public static List<IRBean> getIrBeans() {
         return DbUtil.getIrBeans(sContext);
     }
 
+    /**
+     * create control dialog of target type of device
+     * @param context
+     * @param bean should get from db
+     * @return
+     * @throws NullPointerException
+     */
     public static Dialog newRemoteDialog(@NonNull Context context, @NonNull IRBean bean) throws NullPointerException {
         if (bean == null) {
             return null;
@@ -202,6 +258,12 @@ public class IRUtils {
         return dialog;
     }
 
+    /**
+     * get ir data from local disk if exists,otherwise download it from servers and save to local
+     * @param deviceType
+     * @param remoteId
+     * @param result
+     */
     public static void getIRData(int deviceType, int remoteId, final IRequestResult<IrDataList> result) {
         if (result == null) {
             return;
@@ -245,6 +307,11 @@ public class IRUtils {
         return sContext.getSharedPreferences(IR_SP_NAME, Context.MODE_PRIVATE);
     }
 
+    /**
+     * get a json string from object
+     * @param target
+     * @return
+     */
     public static String toJson(Object target) {
         try {
             String json = new ObjectMapper().writeValueAsString(target);
@@ -256,6 +323,13 @@ public class IRUtils {
         return "";
     }
 
+    /**
+     * parse a json string to object
+     * @param json
+     * @param tClass
+     * @param <T>
+     * @return
+     */
     public static <T> T parseJson(String json, Class<T> tClass) {
         try {
             return new ObjectMapper().readValue(json, tClass);
@@ -265,6 +339,12 @@ public class IRUtils {
         return null;
     }
 
+    /**
+     * search from key list,if keycode matched
+     * @param irData
+     * @param keyCode
+     * @return
+     */
     public static int[] searchKeyCodeIR(IrData irData, int keyCode) {
         if (irData == null || irData.keys == null || irData.keys.isEmpty())
             return null;
@@ -279,6 +359,11 @@ public class IRUtils {
         return null;
     }
 
+    /**
+     * parse a string formatted ir to integer array
+     * @param pulse
+     * @return
+     */
     private static int[] parsePulse(String pulse) {
         if (TextUtils.isEmpty(pulse)) {
             return null;
@@ -296,6 +381,11 @@ public class IRUtils {
         return null;
     }
 
+    /**
+     * if current locale language is CN, take the Chinese name of brand,otherwise English
+     * @param brand
+     * @return
+     */
     public static String getBrandNameByLocale(BrandList.Brand brand) {
         if (brand == null) return "";
 
@@ -308,6 +398,12 @@ public class IRUtils {
         return brand.ename;
     }
 
+    /**
+     * handle error code toast
+     * should be called in UI thread
+     * @param context
+     * @param code
+     */
     public static void handleError(Context context,int code) {
         int errorRes = R.string.ir_error_network;
         switch (code){

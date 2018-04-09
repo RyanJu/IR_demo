@@ -12,11 +12,12 @@ import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
  * @version 2018/3/29 10:57 1.0
  * @time 2018/3/29 10:57
  * @project ir_demo com.alcidae.smarthome.ir.ui.dialog
- * @description
+ * @description not used
  * @updateVersion 1.0
  * @updateTime 2018/3/29 10:57
  */
 
+// TODO: 2018/4/9
 public class OtherRemoteControllerDialog extends BaseFloatDialog {
     public OtherRemoteControllerDialog(@NonNull Context context) {
         super(context);

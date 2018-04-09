@@ -15,9 +15,24 @@ import java.util.Arrays;
  */
 
 public class EventSendIR {
+    /**
+     * ir frequency
+     */
     int frequency;
+
+    /**
+     * id of this remote controller data from kookong sdk
+     */
     int remoteId;
+
+    /**
+     *
+     */
     int deviceType;
+
+    /**
+     * the ir data
+     */
     int[] irDataArray;
 
     public int getFrequency() {

@@ -34,7 +34,7 @@ import java.util.List;
  * @version 2018/3/26 14:13 1.0
  * @time 2018/3/26 14:13
  * @project ir_demo com.alcidae.smarthome.ir.ui.activity
- * @description
+ * @description choose device type
  * @updateVersion 1.0
  * @updateTime 2018/3/26 14:13
  */

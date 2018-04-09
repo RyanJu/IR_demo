@@ -9,7 +9,7 @@ import java.util.List;
  * @version 2018/4/4 15:39 1.0
  * @time 2018/4/4 15:39
  * @project ir_demo com.alcidae.smarthome.ir.data
- * @description
+ * @description local areas
  * @updateVersion 1.0
  * @updateTime 2018/4/4 15:39
  */

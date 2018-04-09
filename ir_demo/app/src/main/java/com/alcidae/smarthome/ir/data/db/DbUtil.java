@@ -57,4 +57,12 @@ public class DbUtil {
     public static List<IRBean> getIrBeans(Context context) {
         return FinalDb.create(context).findAll(IRBean.class);
     }
+
+    public static void deleteBean(Context context, IRBean irBean) {
+        FinalDb.create(context).delete(irBean);
+    }
+
+    public static void updateBean(Context context, IRBean irBean) {
+        FinalDb.create(context).update(irBean);
+    }
 }

@@ -19,7 +19,7 @@ import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
  * @version 2018/3/27 18:34 1.0
  * @time 2018/3/27 18:34
  * @project ir_demo com.alcidae.smarthome.ir.ui.dialog
- * @description
+ * @description input name of matched remote controller {@link com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity}
  * @updateVersion 1.0
  * @updateTime 2018/3/27 18:34
  */

@@ -24,111 +24,150 @@
             android:layout_centerInParent="true" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/ir_bg_white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="180dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/shape_ir_match_round">
-
-            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                android:id="@+id/id_activity_ir_match_test_btn_iv"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:layout_centerInParent="true"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/selector_power_switch"
-                android:visibility="visible" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/ir_bg_white"
+            android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/id_activity_ir_match_test_volume_layout"
-                android:layout_width="58dp"
-                android:layout_height="118dp"
-                android:layout_centerInParent="true"
-                android:visibility="gone">
+                android:layout_width="180dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/shape_ir_match_round">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
-
-                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                        android:id="@+id/id_activity_ir_match_test_volume_up_view"
-                        style="@style/DialogIconStyle"
-                        android:src="@drawable/selector_volume_up" />
-
-                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                        android:id="@+id/id_activity_ir_match_test_volume_down_view"
-                        style="@style/DialogIconStyle"
-                        android:src="@drawable/selector_volume_down" />
-
-                </LinearLayout>
-
-                <com.alcidae.smarthome.ir.widget.IrTextView
-                    style="@style/DialogTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                    android:id="@+id/id_activity_ir_match_test_btn_iv"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:layout_centerInParent="true"
-                    android:text="@string/ir_volume" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/selector_power_switch"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:id="@+id/id_activity_ir_match_test_volume_layout"
+                    android:layout_width="58dp"
+                    android:layout_height="118dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical">
+
+                        <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                            android:id="@+id/id_activity_ir_match_test_volume_up_view"
+                            style="@style/DialogIconStyle"
+                            android:src="@drawable/selector_volume_up" />
+
+                        <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                            android:id="@+id/id_activity_ir_match_test_volume_down_view"
+                            style="@style/DialogIconStyle"
+                            android:src="@drawable/selector_volume_down" />
+
+                    </LinearLayout>
+
+                    <com.alcidae.smarthome.ir.widget.IrTextView
+                        style="@style/DialogTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/ir_volume" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:id="@+id/id_activity_ir_match_test_btn_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:text="@string/ir_power"
+                android:textColor="@color/color_0acc7a"
+                android:textSize="17sp" />
 
-        <com.alcidae.smarthome.ir.widget.IrTextView
-            android:id="@+id/id_activity_ir_match_test_btn_text_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:text="@string/ir_power"
-            android:textColor="@color/color_0acc7a"
-            android:textSize="17sp" />
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="35dp"
+                android:gravity="center"
+                android:text="@string/ir_match_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
-        <com.alcidae.smarthome.ir.widget.IrTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="37dp"
-            android:layout_marginTop="35dp"
-            android:gravity="center"
-            android:text="@string/ir_match_hint"
-            android:textColor="@color/color_666666"
-            android:textSize="14sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.alcidae.smarthome.ir.widget.IrButton
+                    android:id="@+id/id_activity_ir_match_test_no_btn"
+                    android:layout_width="143dp"
+                    android:layout_height="44dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@drawable/selector_button_round"
+                    android:text="@string/ir_no" />
+
+                <com.alcidae.smarthome.ir.widget.IrButton
+                    android:id="@+id/id_activity_ir_match_test_yes_btn"
+                    android:layout_width="143dp"
+                    android:layout_height="44dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/selector_button_round"
+                    android:text="@string/ir_yes" />
+            </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/id_activity_ir_match_test_skip_rl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="40dp"
+            android:background="@color/color_999999"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-            <com.alcidae.smarthome.ir.widget.IrButton
-                android:id="@+id/id_activity_ir_match_test_no_btn"
-                android:layout_width="143dp"
-                android:layout_height="44dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="50dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/selector_button_round"
-                android:text="@string/ir_no" />
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:id="@+id/id_activity_ir_match_test_skip_hint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/ir_match_power_on_hint"
+                android:textColor="@color/ir_bg_white"
+                android:textSize="14sp" />
 
-            <com.alcidae.smarthome.ir.widget.IrButton
-                android:id="@+id/id_activity_ir_match_test_yes_btn"
-                android:layout_width="143dp"
-                android:layout_height="44dp"
-                android:layout_alignParentBottom="true"
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:id="@+id/id_activity_ir_match_test_skip_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="50dp"
-                android:layout_marginRight="40dp"
-                android:background="@drawable/selector_button_round"
-                android:text="@string/ir_yes" />
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:background="@drawable/shape_ir_match_round"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/ir_skip"
+                android:textColor="@color/ir_bg_white"
+                android:textSize="14sp" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

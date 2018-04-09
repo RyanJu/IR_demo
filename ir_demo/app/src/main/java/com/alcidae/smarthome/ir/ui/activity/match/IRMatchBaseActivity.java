@@ -40,6 +40,8 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected int mAreaid;
     protected SpList.Sp mSp;
     protected StbList.Stb mStb;
+    protected TextView mSkipHintTv;
+
 
     public static void launchCommon(Activity activity, int requestCode, int deviceType, BrandList.Brand brand) {
         launch(activity, requestCode, deviceType, brand, 0, null);
@@ -121,6 +123,8 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         mAreaid = intent.getIntExtra("areaId", 0);
         mSp = (SpList.Sp) intent.getSerializableExtra("sp");
         mStb = (StbList.Stb) intent.getSerializableExtra("stb");
+
+        this.mSkipHintTv.setText(getString(R.string.ir_match_power_on_hint, IRUtils.deviceTypeToString(this, mDeviceType)));
     }
 
     private void initViews() {
@@ -130,12 +134,14 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
         this.mCenterButtonHintTv = findViewById(R.id.id_activity_ir_match_test_btn_text_tv);
         this.mVolumeLayout = findViewById(R.id.id_activity_ir_match_test_volume_layout);
         this.mCenterButtonIv.setOnClickListener(this);
+        this.mSkipHintTv = findViewById(R.id.id_activity_ir_match_test_skip_hint_tv);
         findViewById(R.id.id_activity_ir_match_test_no_btn)
                 .setOnClickListener(this);
         findViewById(R.id.id_activity_ir_match_test_yes_btn)
                 .setOnClickListener(this);
         findViewById(R.id.id_activity_ir_match_test_volume_up_view).setOnClickListener(this);
         findViewById(R.id.id_activity_ir_match_test_volume_down_view).setOnClickListener(this);
+        findViewById(R.id.id_activity_ir_match_test_skip_tv).setOnClickListener(this);
     }
 
 
@@ -145,10 +151,14 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
             case R.id.id_ir_back_iv:
                 finish();
                 break;
+            case R.id.id_activity_ir_match_test_skip_tv:
+                findViewById(R.id.id_activity_ir_match_test_skip_rl).setVisibility(View.GONE);
+                break;
             case R.id.id_activity_ir_match_test_no_btn:
                 onClickButtonNo();
                 break;
             case R.id.id_activity_ir_match_test_yes_btn:
+                findViewById(R.id.id_activity_ir_match_test_skip_rl).setVisibility(View.GONE);
                 onClickButtonYes();
                 break;
             case R.id.id_activity_ir_match_test_btn_iv:

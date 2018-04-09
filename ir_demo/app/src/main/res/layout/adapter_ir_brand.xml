@@ -2,18 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ir_bg_white">
+    android:background="@color/ir_bg_white"
+    android:orientation="vertical">
 
-    <com.alcidae.smarthome.ir.widget.IrTextView
-        android:id="@+id/id_adapter_ir_brand_item_tv"
+    <LinearLayout
+        android:id="@+id/id_adapter_ir_brand_item_ll"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="14dp"
-        android:text="Aux"
-        android:textColor="@color/color_222222"
-        android:textSize="17sp" />
+        android:minHeight="45dp"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <com.alcidae.smarthome.ir.widget.IrTextView
+            android:id="@+id/id_adapter_ir_brand_item_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:text="Aux"
+            android:textColor="@color/color_222222"
+            android:textSize="17sp" />
+
+        <com.alcidae.smarthome.ir.widget.IrTextView
+            android:id="@+id/id_adapter_ir_brand_item_ename_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:text="aux"
+            android:textColor="@color/color_777777"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_d9eeeff1" />
 </LinearLayout>

@@ -61,4 +61,6 @@
     <string name="ir_search_for_your_stb">搜索机顶盒</string>
     <string name="ir_search_failed">没有此机顶盒!</string>
     <string name="ir_choose_area">请选择区域</string>
+    <string name="ir_match_power_on_hint">如果%1$s已经打开,忽略此按键</string>
+    <string name="ir_skip">忽略</string>
 </resources>

@@ -63,5 +63,7 @@
     <string name="ir_search_failed">No such STBs!</string>
     <string name="ir_choose_area">Choose Area</string>
     <string name="ir_error_key">App inner error.</string>
+    <string name="ir_match_power_on_hint">If the %1$s is on,skip the key</string>
+    <string name="ir_skip">skip</string>
 
 </resources>

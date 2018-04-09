@@ -7,19 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
@@ -29,23 +25,18 @@ import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
-import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.utils.LogUtil;
-import com.kookong.app.data.BrandHuaWeiList;
 import com.kookong.app.data.BrandList;
-import com.kookong.app.data.SpList;
-import com.kookong.app.data.StbList;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Create By zhurongkun
@@ -179,16 +170,17 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         Collections.sort(brandList, new Comparator<BrandList.Brand>() {
             @Override
             public int compare(BrandList.Brand o1, BrandList.Brand o2) {
-                String s1 = o1.ename == null ? "" : o1.ename;
-                String s2 = o2.ename == null ? "" : o2.ename;
+                String s1 = o1.initial == null ? "" : o1.initial;
+                String s2 = o2.initial;
                 return s1.compareToIgnoreCase(s2);
             }
         });
 
         ItemBean title = null;
         for (BrandList.Brand brand : brandList) {
-            if (title == null || !TextUtils.equals(title.title, brand.initial)) {
-                title = new ItemBean(true, brand.initial);
+            String firstLetter = TextUtils.isEmpty(brand.initial) ? "" : String.valueOf(brand.initial).trim();
+            if (title == null || !TextUtils.equals(title.title, firstLetter)) {
+                title = new ItemBean(true, firstLetter);
                 mItems.add(title);
             }
             mItems.add(new ItemBean(brand));
@@ -200,7 +192,6 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         if (mItems == null) {
             mItems = new ArrayList<>();
         }
-
 
         mItems.add(new ItemBean(true, getResources().getString(R.string.ir_common_brands)));
 
@@ -268,6 +259,14 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
             } else {
                 BrandHolder bh = (BrandHolder) holder;
                 bh.mTextTv.setText(IRUtils.getBrandNameByLocale(itemBean.brand));
+
+                if (Locale.CHINA.getLanguage().equals(Locale.getDefault().getLanguage())) {
+                    bh.mSubTitleTv.setVisibility(View.VISIBLE);
+                    bh.mSubTitleTv.setText(itemBean.brand.ename);
+                } else {
+                    bh.mSubTitleTv.setVisibility(View.GONE);
+                }
+
             }
         }
 
@@ -308,11 +307,13 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
 
         class BrandHolder extends Holder {
             private final TextView mTextTv;
+            private final TextView mSubTitleTv;
 
             public BrandHolder(View itemView) {
                 super(itemView);
                 mTextTv = itemView.findViewById(R.id.id_adapter_ir_brand_item_tv);
-                mTextTv.setOnClickListener(new View.OnClickListener() {
+                mSubTitleTv = itemView.findViewById(R.id.id_adapter_ir_brand_item_ename_tv);
+                itemView.findViewById(R.id.id_adapter_ir_brand_item_ll).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();

@@ -30,11 +30,15 @@ import com.kookong.app.data.SpList;
 import com.kookong.app.data.StbList;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.nio.channels.NotYetBoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Create By zhurongkun
@@ -73,8 +77,16 @@ public class IRUtils {
     private static String sCity = "";
     private static String sArea = "";
 
+
+    private static ExecutorService sThreadPool = null;
+    private static final Object sLock = new Object();
+
+    private IRUtils() {
+    }
+
     /**
      * initial method ,need to call first
+     *
      * @param context
      */
     public static void init(Context context) {
@@ -117,11 +129,12 @@ public class IRUtils {
 
     /**
      * saved current area,note that 3rd param is not necessary
+     *
      * @param province
      * @param city
      * @param area
      */
-    public static void setArea(@NonNull String province,@NonNull String city,@Nullable String area) {
+    public static void setArea(@NonNull String province, @NonNull String city, @Nullable String area) {
         sProvince = province;
         sCity = city;
         sArea = area;
@@ -141,6 +154,7 @@ public class IRUtils {
 
     /**
      * cast from deviceType integer to string
+     *
      * @param context
      * @param deviceType
      * @return
@@ -188,6 +202,7 @@ public class IRUtils {
 
     /**
      * save a air conditioner matched remote controller to local
+     *
      * @param frequency
      * @param brand
      * @param deviceType
@@ -204,6 +219,7 @@ public class IRUtils {
 
     /**
      * save a device(not air conditioner) matched remote controller to local
+     *
      * @param frequency
      * @param sp
      * @param stb
@@ -220,6 +236,7 @@ public class IRUtils {
 
     /**
      * get saved remote controllers from local
+     *
      * @return
      */
     public static List<IRBean> getIrBeans() {
@@ -228,8 +245,9 @@ public class IRUtils {
 
     /**
      * create control dialog of target type of device
+     *
      * @param context
-     * @param bean should get from db
+     * @param bean    should get from db
      * @return
      * @throws NullPointerException
      */
@@ -255,11 +273,13 @@ public class IRUtils {
             default:
                 dialog = new Dialog(context);
         }
+        dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
     /**
      * get ir data from local disk if exists,otherwise download it from servers and save to local
+     *
      * @param deviceType
      * @param remoteId
      * @param result
@@ -309,6 +329,7 @@ public class IRUtils {
 
     /**
      * get a json string from object
+     *
      * @param target
      * @return
      */
@@ -325,6 +346,7 @@ public class IRUtils {
 
     /**
      * parse a json string to object
+     *
      * @param json
      * @param tClass
      * @param <T>
@@ -341,6 +363,7 @@ public class IRUtils {
 
     /**
      * search from key list,if keycode matched
+     *
      * @param irData
      * @param keyCode
      * @return
@@ -361,6 +384,7 @@ public class IRUtils {
 
     /**
      * parse a string formatted ir to integer array
+     *
      * @param pulse
      * @return
      */
@@ -383,6 +407,7 @@ public class IRUtils {
 
     /**
      * if current locale language is CN, take the Chinese name of brand,otherwise English
+     *
      * @param brand
      * @return
      */
@@ -401,15 +426,42 @@ public class IRUtils {
     /**
      * handle error code toast
      * should be called in UI thread
+     *
      * @param context
      * @param code
      */
-    public static void handleError(Context context,int code) {
+    public static void handleError(Context context, int code) {
         int errorRes = R.string.ir_error_network;
-        switch (code){
+        switch (code) {
             case 1://
                 break;
         }
-        ToastUtil.toast(context,errorRes);
+        ToastUtil.toast(context, errorRes);
+    }
+
+
+    /**
+     * helper method to run on threads
+     *
+     * @param runnable
+     */
+    public static void runOnThread(final Runnable runnable) {
+        synchronized (sLock) {
+            if (sThreadPool == null) {
+                sThreadPool = Executors.newSingleThreadExecutor();
+            }
+        }
+        sThreadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (runnable != null) {
+                        runnable.run();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

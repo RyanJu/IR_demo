@@ -19,12 +19,15 @@ import com.hzy.tvmao.KKACManagerV2;
 import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.ac.ACConstants;
 import com.hzy.tvmao.ir.ac.ACStateV2;
+import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
 
 import net.tsz.afinal.FinalDb;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * Create By zhurongkun
@@ -54,6 +57,9 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
     private TextView mTimingTv;
     private SeekBar mTimingSeekbar;
 
+    private ImageView mSpeedStatusIv;
+    private ImageView mSwingStatusIv;
+
     //schedule time
     private float mTiming;
 
@@ -64,6 +70,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
     //load from server
     private IrData mIrData;
+
 
     public RemoteACDialog(@NonNull Context context, IRBean irBean) {
         super(context, irBean);
@@ -80,6 +87,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
         loadIrData();
         setOnDismissListener(this);
+
     }
 
     private void loadIrData() {
@@ -125,6 +133,8 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
         this.mSwingIv = findViewById(R.id.id_dialog_ac_swing_iv);
         this.mTimingTv = findViewById(R.id.id_dialog_ac_timing_tv);
         this.mTimingSeekbar = findViewById(R.id.id_dialog_ac_timing_seekbar);
+        this.mSpeedStatusIv = findViewById(R.id.id_dialog_ac_status_speed_iv);
+        this.mSwingStatusIv = findViewById(R.id.id_dialog_ac_status_swing_iv);
 
         String ac = getContext().getResources().getString(R.string.ir_ac);
         String title = mIrBean != null ? mIrBean.getBrandName() + " " + ac : ac;
@@ -217,6 +227,45 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
             updatePanelMode();
 
             updatePanelTemp();
+
+            updateWindSpeed();
+
+            updateWindDirection();
+        }
+    }
+
+    private void updateWindDirection() {
+        LogUtil.i("wind direc type =" + mAcManger.getCurUDDirectType());
+        LogUtil.i("wind direc " + mAcManger.getCurUDDirect());
+
+        if (mAcManger.getCurUDDirect() == 0) {
+            //扫风
+            mSwingStatusIv.setImageResource(R.drawable.ir_swing_open);
+        } else {
+            //固定风
+            mSwingStatusIv.setImageResource(R.drawable.ir_swing_close);
+        }
+    }
+
+    private void updateWindSpeed() {
+        if (mAcManger.isWindSpeedCanControl()) {
+            int curWindSpeed = mAcManger.getCurWindSpeed();
+            switch (curWindSpeed) {
+                case ACConstants.AC_WIND_SPEED_AUTO://自动风速
+                    mSpeedStatusIv.setImageResource(R.drawable.ir_speed_auto);
+                    break;
+                case ACConstants.AC_WIND_SPEED_LOW://
+                    mSpeedStatusIv.setImageResource(R.drawable.ir_speed_min);
+                    break;
+                case ACConstants.AC_WIND_SPEED_MEDIUM://
+                    mSpeedStatusIv.setImageResource(R.drawable.ir_speed_middle);
+                    break;
+                case ACConstants.AC_WIND_SPEED_HIGH://
+                    mSpeedStatusIv.setImageResource(R.drawable.ir_speed_max);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -254,6 +303,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
                 mModeStateIv.setImageResource(R.drawable.ir_ac_mode_dry);
                 break;
         }
+        LogUtil.i("mode:" + modelInfo);
     }
 
     @Override
@@ -295,7 +345,12 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
     private void onClickSwing() {
         try {
-            mAcManger.changeUDWindDirect(ACStateV2.UDWindDirectKey.UDDIRECT_KEY_SWING);
+            if (mAcManger.getCurUDDirect() == 0) {
+                //swing turn to fix
+                mAcManger.changeUDWindDirect(ACStateV2.UDWindDirectKey.UDDIRECT_KEY_FIX);
+            } else {
+                mAcManger.changeUDWindDirect(ACStateV2.UDWindDirectKey.UDDIRECT_KEY_SWING);
+            }
             sendIR();
         } catch (Exception e) {
 
@@ -331,12 +386,14 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
     private void onClickTempUp() {
         try {
-            int maxTemp = mAcManger.getMaxTemp();
-            int curTemp = mAcManger.getCurTemp();
-            curTemp++;
-            curTemp = curTemp > maxTemp ? maxTemp : curTemp;
-            mAcManger.setTargetTemp(curTemp);
-            sendIR();
+            if (mAcManger.isTempCanControl()) {
+                int maxTemp = mAcManger.getMaxTemp();
+                int curTemp = mAcManger.getCurTemp();
+                curTemp++;
+                curTemp = curTemp > maxTemp ? maxTemp : curTemp;
+                mAcManger.setTargetTemp(curTemp);
+                sendIR();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -344,12 +401,14 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
     private void onClickTempDown() {
         try {
-            int minTemp = mAcManger.getMinTemp();
-            int curTemp = mAcManger.getCurTemp();
-            curTemp--;
-            curTemp = curTemp < minTemp ? minTemp : curTemp;
-            mAcManger.setTargetTemp(curTemp);
-            sendIR();
+            if (mAcManger.isTempCanControl()) {
+                int minTemp = mAcManger.getMinTemp();
+                int curTemp = mAcManger.getCurTemp();
+                curTemp--;
+                curTemp = curTemp < minTemp ? minTemp : curTemp;
+                mAcManger.setTargetTemp(curTemp);
+                sendIR();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -369,12 +428,17 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
     }
 
     private void sendIR() {
-        EventSendIR eventSendIR = new EventSendIR();
-        eventSendIR.setFrequency(mIrBean.getFrequency());
-        eventSendIR.setDeviceType(mIrBean.getDeviceType());
-        eventSendIR.setRemoteId(mIrBean.getRemoteId());
-        eventSendIR.setIrDataArray(mAcManger.getACIRPatternIntArray());
-        EventBus.getDefault().post(eventSendIR);
+        IRUtils.runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                EventSendIR eventSendIR = new EventSendIR();
+                eventSendIR.setFrequency(mIrBean.getFrequency());
+                eventSendIR.setDeviceType(mIrBean.getDeviceType());
+                eventSendIR.setRemoteId(mIrBean.getRemoteId());
+                eventSendIR.setIrDataArray(mAcManger.getACIRPatternIntArray());
+                EventBus.getDefault().post(eventSendIR);
+            }
+        });
     }
 
     @Override
@@ -386,7 +450,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
         try {
             if (mAcManger != null) {
                 mIrBean.setExts(mIrData.exts);
-                mIrBean.setKeys(mIrBean.getKeys());
+                mIrBean.setKeys(mIrData.keys);
                 mIrBean.setAccState(mAcManger.getACStateV2InString());
                 FinalDb.create(getContext()).update(mIrBean);
             }

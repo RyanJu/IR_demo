@@ -119,14 +119,20 @@ public class RemoteBoxDialog extends BaseRemoteDialog implements View.OnClickLis
         }
     }
 
-    private void sendIR(int keyCode) {
-        if (mIrData != null) {
-            EventSendIR event = new EventSendIR();
-            event.setDeviceType(mIrBean.getDeviceType());
-            event.setRemoteId(mIrBean.getRemoteId());
-            event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, keyCode));
-            event.setFrequency(mIrData.fre);
-            EventBus.getDefault().post(event);
-        }
+    private void sendIR(final int keyCode) {
+        IRUtils.runOnThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mIrData != null) {
+                    EventSendIR event = new EventSendIR();
+                    event.setDeviceType(mIrBean.getDeviceType());
+                    event.setRemoteId(mIrBean.getRemoteId());
+                    event.setIrDataArray(IRUtils.searchKeyCodeIR(mIrData, keyCode));
+                    event.setFrequency(mIrData.fre);
+                    EventBus.getDefault().post(event);
+                }
+            }
+        });
+
     }
 }

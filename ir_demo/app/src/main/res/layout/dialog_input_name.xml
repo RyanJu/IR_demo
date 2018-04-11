@@ -47,22 +47,22 @@
         <com.alcidae.smarthome.ir.widget.IrButton
             android:id="@+id/id_dialog_input_name_cancel_btn"
             android:layout_width="118dp"
-            android:layout_height="44dp"
+            android:layout_height="40dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button_round2"
             android:text="@string/ir_cancel"
             android:textColor="@color/color_textPrimary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <com.alcidae.smarthome.ir.widget.IrButton
             android:id="@+id/id_dialog_input_name_ok_btn"
             android:layout_width="118dp"
-            android:layout_height="44dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button_round2"
             android:text="@string/ir_ok"
             android:textColor="@color/color_textPrimary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

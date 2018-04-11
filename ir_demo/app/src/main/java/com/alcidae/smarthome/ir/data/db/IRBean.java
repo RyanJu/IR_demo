@@ -21,7 +21,6 @@ import java.util.HashMap;
 public class IRBean {
 
 
-
     //database id,auto increase
     int id;
 
@@ -181,7 +180,7 @@ public class IRBean {
     }
 
     public String getCustomName() {
-        return customName;
+        return customName == null ? "" : customName;
     }
 
     public void setCustomName(String customName) {

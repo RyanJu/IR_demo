@@ -263,7 +263,7 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
             public BrandHolder(View itemView) {
                 super(itemView);
                 mTextTv = itemView.findViewById(R.id.id_adapter_ir_brand_item_tv);
-                mTextTv.setOnClickListener(new View.OnClickListener() {
+                itemView.findViewById(R.id.id_adapter_ir_brand_item_ll).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();

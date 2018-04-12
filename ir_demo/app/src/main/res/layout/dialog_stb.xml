@@ -1,332 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="510dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:background="@drawable/shape_dialog_trans"
-    android:minWidth="345dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp">
-
-        <com.alcidae.smarthome.ir.widget.IrTextView
-            android:id="@+id/id_dialog_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/ir_stb"
-            android:textColor="@color/color_textPrimary"
-            android:textSize="17sp" />
-
-        <ImageView
-            android:id="@+id/id_dialog_title_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:padding="7dp"
-            android:src="@drawable/ir_closed" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_dddddd" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="17dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                android:id="@+id/id_dialog_stb_power_iv"
-                style="@style/DialogIconStyle"
-                android:src="@drawable/selector_power_switch" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                style="@style/DialogTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ir_power" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                android:id="@+id/id_dialog_stb_menu_iv"
-                style="@style/DialogIconStyle"
-                android:src="@drawable/selector_menu" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                style="@style/DialogTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ir_menu" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                android:id="@+id/id_dialog_stb_alternate_iv"
-                style="@style/DialogIconStyle"
-                android:src="@drawable/selector_alternate" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                style="@style/DialogTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ir_alternate" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                android:id="@+id/id_dialog_stb_back_iv"
-                style="@style/DialogIconStyle"
-                android:src="@drawable/selector_back" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                style="@style/DialogTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ir_back" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/id_dialog_stb_pad_num_ll"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:background="@drawable/ir_dialog_bg" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_1_iv"
-                style="@style/DialogNumStyle"
-                android:layout_marginLeft="45dp"
-                android:text="@string/num_1" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_2_iv"
-                style="@style/DialogNumStyle"
-                android:layout_centerInParent="true"
-                android:text="@string/num_2" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_3_iv"
-                style="@style/DialogNumStyle"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="45dp"
-                android:text="@string/num_3" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_4_iv"
-                style="@style/DialogNumStyle"
-                android:layout_marginLeft="45dp"
-                android:text="@string/num_4" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_5_iv"
-                style="@style/DialogNumStyle"
-                android:layout_centerInParent="true"
-                android:text="@string/num_5" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_6_iv"
-                style="@style/DialogNumStyle"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="45dp"
-                android:text="@string/num_6" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_7_iv"
-                style="@style/DialogNumStyle"
-                android:layout_marginLeft="45dp"
-                android:text="@string/num_7" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_8_iv"
-                style="@style/DialogNumStyle"
-                android:layout_centerInParent="true"
-                android:text="@string/num_8" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_9_iv"
-                style="@style/DialogNumStyle"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="45dp"
-                android:text="@string/num_9" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_input_iv"
-                style="@style/DialogNumStyle"
-                android:layout_marginLeft="45dp"
-                android:text="@string/num_input" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_0_iv"
-                style="@style/DialogNumStyle"
-                android:layout_centerInParent="true"
-                android:text="@string/num_0" />
-
-            <com.alcidae.smarthome.ir.widget.IrTextView
-                android:id="@+id/id_dialog_stb_num_exit_iv"
-                style="@style/DialogNumStyle"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="45dp"
-                android:background="@drawable/selector_exit_pad" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/id_dialog_stb_pad_1_ll"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="490dp"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <com.alcidae.smarthome.ir.widget.IrTextView
+                android:id="@+id/id_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/ir_stb"
+                android:textColor="@color/color_textPrimary"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/id_dialog_title_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:padding="7dp"
+                android:src="@drawable/ir_closed" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_999999" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="17dp"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
-
-                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                        android:id="@+id/id_dialog_stb_volume_up_iv"
-                        style="@style/DialogIconStyle"
-                        android:src="@drawable/selector_volume_up" />
-
-                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                        android:id="@+id/id_dialog_stb_volume_down_iv"
-                        style="@style/DialogIconStyle"
-                        android:src="@drawable/selector_volume_down" />
-
-                </LinearLayout>
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                    android:id="@+id/id_dialog_stb_power_iv"
+                    style="@style/DialogIconStyle"
+                    android:src="@drawable/selector_power_switch" />
 
                 <com.alcidae.smarthome.ir.widget.IrTextView
                     style="@style/DialogTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/ir_volume" />
+                    android:text="@string/ir_power" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                    android:id="@+id/id_dialog_stb_menu_iv"
+                    style="@style/DialogIconStyle"
+                    android:src="@drawable/selector_menu" />
+
+                <com.alcidae.smarthome.ir.widget.IrTextView
+                    style="@style/DialogTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ir_menu" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                    android:id="@+id/id_dialog_stb_alternate_iv"
+                    style="@style/DialogIconStyle"
+                    android:src="@drawable/selector_alternate" />
+
+                <com.alcidae.smarthome.ir.widget.IrTextView
+                    style="@style/DialogTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ir_alternate" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                    android:id="@+id/id_dialog_stb_back_iv"
+                    style="@style/DialogIconStyle"
+                    android:src="@drawable/selector_back" />
+
+                <com.alcidae.smarthome.ir.widget.IrTextView
+                    style="@style/DialogTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ir_back" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_dialog_stb_pad_num_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_1_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_marginLeft="45dp"
+                    android:text="@string/num_1" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_2_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_centerInParent="true"
+                    android:text="@string/num_2" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_3_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:text="@string/num_3" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginBottom="16dp">
 
-                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                    android:id="@+id/id_dialog_stb_home_iv"
-                    style="@style/DialogIconStyle"
-                    android:src="@drawable/selector_home" />
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_4_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_marginLeft="45dp"
+                    android:text="@string/num_4" />
 
-                <com.alcidae.smarthome.ir.widget.IrTextView
-                    style="@style/DialogTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ir_home" />
-            </LinearLayout>
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_5_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_centerInParent="true"
+                    android:text="@string/num_5" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_6_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:text="@string/num_6" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_7_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_marginLeft="45dp"
+                    android:text="@string/num_7" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_8_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_centerInParent="true"
+                    android:text="@string/num_8" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_9_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:text="@string/num_9" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_input_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_marginLeft="45dp"
+                    android:text="@string/num_input" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_0_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_centerInParent="true"
+                    android:text="@string/num_0" />
+
+                <com.alcidae.smarthome.ir.widget.IrVibrateTextView
+                    android:id="@+id/id_dialog_stb_num_exit_iv"
+                    style="@style/DialogNumStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/selector_exit_pad" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_dialog_stb_pad_1_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                    android:id="@+id/id_dialog_stb_mute_iv"
-                    style="@style/DialogIconStyle"
-                    android:src="@drawable/selector_mute" />
-
-                <com.alcidae.smarthome.ir.widget.IrTextView
-                    style="@style/DialogTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ir_mute" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -340,12 +266,12 @@
                         android:orientation="vertical">
 
                         <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                            android:id="@+id/id_dialog_stb_channel_up_iv"
+                            android:id="@+id/id_dialog_stb_volume_up_iv"
                             style="@style/DialogIconStyle"
                             android:src="@drawable/selector_volume_up" />
 
                         <com.alcidae.smarthome.ir.widget.IrVibrateImageView
-                            android:id="@+id/id_dialog_stb_channel_down_iv"
+                            android:id="@+id/id_dialog_stb_volume_down_iv"
                             style="@style/DialogIconStyle"
                             android:src="@drawable/selector_volume_down" />
 
@@ -356,56 +282,136 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/ir_channel" />
+                        android:text="@string/ir_volume" />
 
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                        android:id="@+id/id_dialog_stb_home_iv"
+                        style="@style/DialogIconStyle"
+                        android:src="@drawable/selector_home" />
+
+                    <com.alcidae.smarthome.ir.widget.IrTextView
+                        style="@style/DialogTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ir_home" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                        android:id="@+id/id_dialog_stb_mute_iv"
+                        style="@style/DialogIconStyle"
+                        android:src="@drawable/selector_mute" />
+
+                    <com.alcidae.smarthome.ir.widget.IrTextView
+                        style="@style/DialogTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ir_mute" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:orientation="vertical">
+
+                            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                                android:id="@+id/id_dialog_stb_channel_up_iv"
+                                style="@style/DialogIconStyle"
+                                android:src="@drawable/selector_volume_up" />
+
+                            <com.alcidae.smarthome.ir.widget.IrVibrateImageView
+                                android:id="@+id/id_dialog_stb_channel_down_iv"
+                                style="@style/DialogIconStyle"
+                                android:src="@drawable/selector_volume_down" />
+
+                        </LinearLayout>
+
+                        <com.alcidae.smarthome.ir.widget.IrTextView
+                            style="@style/DialogTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="@string/ir_channel" />
+
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="13dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                    <com.alcidae.smarthome.ir.widget.IrPadView
+                        android:id="@+id/id_dialog_stb_padview"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:scaleType="center" />
+
+                    <com.alcidae.smarthome.ir.widget.IrTextView
+                        style="@style/DialogTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/ir_ok" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <ImageView
+                        android:id="@+id/id_dialog_stb_num_iv"
+                        style="@style/DialogIconStyle"
+                        android:src="@drawable/selector_button" />
+
+                    <com.alcidae.smarthome.ir.widget.IrTextView
+                        style="@style/DialogTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/num" />
+                </RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
-
-                <com.alcidae.smarthome.ir.widget.IrPadView
-                    android:id="@+id/id_dialog_stb_padview"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
-                    android:scaleType="center" />
-
-                <com.alcidae.smarthome.ir.widget.IrTextView
-                    style="@style/DialogTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/ir_ok" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="20dp">
-
-                <ImageView
-                    android:id="@+id/id_dialog_stb_num_iv"
-                    style="@style/DialogIconStyle"
-                    android:src="@drawable/selector_button" />
-
-                <com.alcidae.smarthome.ir.widget.IrTextView
-                    style="@style/DialogTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/num" />
-            </RelativeLayout>
-        </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>

@@ -58,6 +58,7 @@ public class RemoteTVDialog extends BaseRemoteDialog implements View.OnClickList
     }
 
     private void initView() {
+        setWindowSize();
         if (mIrBean == null) {
             return;
         }

@@ -13,6 +13,7 @@ import com.alcidae.smarthome.ir.data.db.IRBean;
 import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.widget.IrPadView;
 import com.hzy.tvmao.interf.IRequestResult;
+import com.hzy.tvmao.ir.Device;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
 
@@ -51,6 +52,7 @@ public class RemoteBoxDialog extends BaseRemoteDialog implements View.OnClickLis
     }
 
     private void initView() {
+        setWindowSize();
         if (mIrBean == null)
             return;
         TextView titleTv = findViewById(R.id.id_dialog_title);

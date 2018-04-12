@@ -3,6 +3,8 @@ package com.alcidae.smarthome.ir.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
+import android.view.Window;
 
 import com.alcidae.smarthome.R;
 
@@ -22,6 +24,5 @@ import com.alcidae.smarthome.R;
 public class BaseFloatDialog extends Dialog {
     public BaseFloatDialog(@NonNull Context context) {
         super(context, R.style.DialogBaseStyle);
-
     }
 }

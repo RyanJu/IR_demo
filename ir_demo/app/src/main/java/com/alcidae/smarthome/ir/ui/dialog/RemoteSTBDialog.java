@@ -57,6 +57,7 @@ public class RemoteSTBDialog extends BaseRemoteDialog implements View.OnClickLis
     }
 
     private void initView() {
+        setWindowSize();
         if (mIrBean == null) {
             return;
         }

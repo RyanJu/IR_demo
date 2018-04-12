@@ -1,9 +1,14 @@
 package com.alcidae.smarthome.ir.ui.dialog;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.alcidae.smarthome.ir.data.db.IRBean;
+import com.alcidae.smarthome.ir.util.DisplayUtil;
 import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
 
 /**
@@ -23,5 +28,16 @@ public class BaseRemoteDialog extends BaseFloatDialog {
     public BaseRemoteDialog(@NonNull Context context,@NonNull IRBean irBean) {
         super(context);
         this.mIrBean = irBean;
+    }
+
+    protected void setWindowSize() {
+        Window window = getWindow();
+        WindowManager.LayoutParams attributes = window.getAttributes();
+        if (attributes != null) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            window.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            attributes.width = metrics.widthPixels - DisplayUtil.dip2px(getContext(), 15) * 2;
+            window.setAttributes(attributes);
+        }
     }
 }

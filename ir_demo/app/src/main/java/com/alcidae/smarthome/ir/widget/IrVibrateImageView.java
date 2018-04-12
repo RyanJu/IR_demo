@@ -26,8 +26,6 @@ public class IrVibrateImageView extends android.support.v7.widget.AppCompatImage
     private Vibrator mVibrator = null;
 
 
-    private Handler mAsyncHandler;
-    private HandlerThread mht;
 
     public IrVibrateImageView(Context context) {
         super(context);
@@ -38,26 +36,6 @@ public class IrVibrateImageView extends android.support.v7.widget.AppCompatImage
         setClickable(true);
         setFocusable(true);
         mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        mht = new HandlerThread("vibrate thread " + new Random().nextInt());
-        mht.start();
-        mAsyncHandler = new Handler(mht.getLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-            }
-        };
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mht.quit();
     }
 
     public IrVibrateImageView(Context context, @Nullable AttributeSet attrs) {
@@ -77,11 +55,5 @@ public class IrVibrateImageView extends android.support.v7.widget.AppCompatImage
             mVibrator.vibrate(50);
         }
         return ret;
-    }
-
-    private void vibrate() {
-        if (mAsyncHandler != null) {
-            mAsyncHandler.obtainMessage().sendToTarget();
-        }
     }
 }

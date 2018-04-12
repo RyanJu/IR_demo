@@ -3,7 +3,10 @@ package com.alcidae.smarthome.ir.ui.dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
+import com.alcidae.smarthome.ir.util.DisplayUtil;
 import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
 import com.hzy.tvmao.KKACManagerV2;
@@ -120,6 +124,8 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
     }
 
     private void initView() {
+        setWindowSize();
+
         this.mCloseIv = findViewById(R.id.id_dialog_title_close);
         this.mTitleTv = findViewById(R.id.id_dialog_title);
         this.mTempDownIv = findViewById(R.id.id_dialog_ac_temp_down_iv);
@@ -153,6 +159,8 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
 
 
     }
+
+
 
     private void initTiming() {
         if (mAcManger.isTimeingCanUse()) {

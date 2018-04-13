@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,10 @@ import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
+import com.github.promeg.pinyinhelper.Pinyin;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.interf.IRequestResult;
+import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.SpList;
 import com.kookong.app.data.StbList;
 
@@ -106,22 +109,31 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
         Collections.sort(brandList, new Comparator<StbList.Stb>() {
             @Override
             public int compare(StbList.Stb o1, StbList.Stb o2) {
-                String s1 = o1.bname == null ? "" : o1.bname;
-                String s2 = o2.bname == null ? "" : o2.bname;
+
+                String s1 = o1.bname == null ? "" : getPinYin(o1.bname);
+                String s2 = o2.bname == null ? "" : getPinYin(o2.bname);
                 return s1.compareToIgnoreCase(s2);
             }
         });
 
         ItemBean title = null;
         for (StbList.Stb brand : brandList) {
-            if (title == null || !brand.bname.startsWith(title.title)) {
-                title = new ItemBean(true, String.valueOf(brand.bname.charAt(0)));
+            if (title == null || !getBrandTitle(brand.bname).equals(title.title)) {
+                title = new ItemBean(true, getBrandTitle(brand.bname));
                 mItems.add(title);
             }
             mItems.add(new ItemBean(brand));
         }
     }
 
+    private String getBrandTitle(String bname) {
+        return String.valueOf(getPinYin(bname).charAt(0)).trim();
+    }
+
+    private String getPinYin(String chinese) {
+        String result = Pinyin.toPinyin(chinese, "");
+        return result;
+    }
 
     private void addCommonBrands(int hotCount, List<StbList.Stb> stbs) {
         if (mItems == null) {
@@ -263,6 +275,7 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
             public BrandHolder(View itemView) {
                 super(itemView);
                 mTextTv = itemView.findViewById(R.id.id_adapter_ir_brand_item_tv);
+                itemView.findViewById(R.id.id_adapter_ir_brand_item_ename_tv).setVisibility(View.GONE);
                 itemView.findViewById(R.id.id_adapter_ir_brand_item_ll).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

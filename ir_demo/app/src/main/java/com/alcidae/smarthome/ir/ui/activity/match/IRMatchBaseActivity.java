@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.IRConst;
+import com.alcidae.smarthome.ir.ui.dialog.MatchLoadingDialog;
 import com.hzy.tvmao.ir.Device;
 import com.kookong.app.data.BrandList;
 import com.kookong.app.data.SpList;
@@ -42,6 +43,7 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected StbList.Stb mStb;
     protected TextView mSkipHintTv;
 
+    protected MatchLoadingDialog mLoadingDialog;
 
     public static void launchCommon(Activity activity, int requestCode, int deviceType, BrandList.Brand brand) {
         launch(activity, requestCode, deviceType, brand, 0, null);
@@ -202,4 +204,19 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
     protected abstract void onClickButtonYes();
 
     protected abstract void onClickButtonNo();
+
+    protected void showSwitchRemoteDialog() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new MatchLoadingDialog(this);
+        }
+        if (!isFinishing())
+            mLoadingDialog.show();
+    }
+
+    protected void dismissSwitchRemoteDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
+    }
+
 }

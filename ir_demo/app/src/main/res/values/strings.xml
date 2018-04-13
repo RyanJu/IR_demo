@@ -16,7 +16,7 @@
     <string name="ir_choose_brand">Choose a brand</string>
     <string name="ir_search_for_your_brand">Search for your brand</string>
     <string name="ir_common_brands">Common Brands</string>
-    <string name="ir_match_hint" >1.Please let the controlled electric appliance appear in the video screen, and click the button to send the infrared signal.\n\n2. Choose whether or not according to the equipment.</string>
+    <string name="ir_match_hint" >1.Please let the controlled electric appliance appear in the video screen, and click the button to send the infrared signal.\n\n2. Choose yes or not according to the equipment.</string>
     <string name="ir_no">No</string>
     <string name="ir_yes">Yes</string>
     <string name="ir_power">Power</string>
@@ -65,5 +65,6 @@
     <string name="ir_error_key">App inner error.</string>
     <string name="ir_match_power_on_hint">If the %1$s is on,skip the key</string>
     <string name="ir_skip">skip</string>
+    <string name="ir_change_next_remote">Switch to next one,wait a minute</string>
 
 </resources>

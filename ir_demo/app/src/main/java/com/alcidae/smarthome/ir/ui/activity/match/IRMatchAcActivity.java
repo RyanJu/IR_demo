@@ -12,10 +12,8 @@ import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
 import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
-import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KKACManagerV2;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.Device;
 import com.hzy.tvmao.ir.ac.ACConstants;
 import com.hzy.tvmao.utils.LogUtil;
@@ -92,6 +90,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
         KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
+                dismissSwitchRemoteDialog();
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
                     List<IrData> list = irDataList.getIrDataList();
                     mCurrentIRData = list.get(0);
@@ -215,8 +214,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void showErrorDialog() {
-        if (!mErrorDialogShowedOnce) {
-            mErrorDialogShowedOnce = true;
+        if (isTheLastOne()) {
             UnsuccessDialog dialog = new UnsuccessDialog(this);
             dialog.show();
             dialog.setClickListener(new DialogInterface.OnClickListener() {
@@ -228,8 +226,13 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
                 }
             });
         } else {
+            showSwitchRemoteDialog();
             findNextRemoteId();
         }
+    }
+
+    private boolean isTheLastOne() {
+        return mRemoteIds != null && mRemoteIds.size() - 1 == mCurrentIdIndex;
     }
 
     private void findNextRemoteId() {

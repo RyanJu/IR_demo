@@ -1,5 +1,7 @@
 package com.alcidae.smarthome.ir.data.db;
 
+import android.support.annotation.Keep;
+
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.SpList;
 
@@ -17,7 +19,7 @@ import java.util.HashMap;
  * @updateVersion 1.0
  * @updateTime 2018/3/27 15:59
  */
-
+@Keep
 public class IRBean {
 
 

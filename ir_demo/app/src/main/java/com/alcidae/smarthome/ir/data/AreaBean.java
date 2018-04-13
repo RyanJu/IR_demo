@@ -1,5 +1,7 @@
 package com.alcidae.smarthome.ir.data;
 
+import android.support.annotation.Keep;
+
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
  * @updateVersion 1.0
  * @updateTime 2018/4/4 15:39
  */
-
+@Keep
 public class AreaBean {
     List<Province> provinces;
 

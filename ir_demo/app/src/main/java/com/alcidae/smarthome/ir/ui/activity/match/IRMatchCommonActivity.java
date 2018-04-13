@@ -72,6 +72,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
 
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {
+                    dismissSwitchRemoteDialog();
                     LogUtil.i("testIRDataById succ");
                     if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
                         mIrData = irDataList.getIrDataList().get(0);
@@ -172,7 +173,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
     }
 
     private void showErrorDialogOrGoNext() {
-        if (!mErrorDialogShowedOnce) {
+        if (isTheLastOne()) {
             mErrorDialogShowedOnce = true;
             UnsuccessDialog dialog = new UnsuccessDialog(this);
             dialog.show();
@@ -185,8 +186,13 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
                 }
             });
         } else {
+            showSwitchRemoteDialog();
             findNextRemoteId();
         }
+    }
+
+    private boolean isTheLastOne() {
+        return mRemoteIds != null && mRemoteIds.size() - 1 == mCurrentIdPosition;
     }
 
     private void findNextRemoteId() {

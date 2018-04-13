@@ -14,7 +14,7 @@
     <string name="ir_choose_brand">选择品牌</string>
     <string name="ir_search_for_your_brand">搜索品牌</string>
     <string name="ir_common_brands">常用品牌</string>
-    <string name="ir_match_hint">1.请让所控制电器出现在遥控画面中，并点击按钮发送遥控数据.\n\n2. 根据电器响应结果选择是或者否.</string>
+    <string name="ir_match_hint">1.请让所控制电器出现在遥控画面中，并点击按钮发送遥控数据.\n\n2. 根据电器响应结果选择有效或者无效.</string>
     <string name="ir_no">无效</string>
     <string name="ir_yes">有效</string>
     <string name="ir_power">开关</string>
@@ -63,4 +63,5 @@
     <string name="ir_choose_area">请选择区域</string>
     <string name="ir_match_power_on_hint">如果%1$s已经打开,忽略此按键</string>
     <string name="ir_skip">忽略</string>
+    <string name="ir_change_next_remote">正在切换下一组遥控器，请稍后</string>
 </resources>

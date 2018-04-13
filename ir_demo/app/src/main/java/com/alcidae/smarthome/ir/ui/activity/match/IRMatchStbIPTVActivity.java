@@ -76,6 +76,7 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
             KookongSDK.testIRDataById(String.valueOf(rid), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {
+                    dismissSwitchRemoteDialog();
                     LogUtil.i("testIRDataById succ " + irDataList.getIrDataList().size());
                     if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {
                         mIrData = irDataList.getIrDataList().get(0);
@@ -188,7 +189,7 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
     }
 
     private void showErrorDialogOrGoNext() {
-        if (!mErrorDialogShowedOnce) {
+        if (isTheLastOne()) {
             mErrorDialogShowedOnce = true;
             UnsuccessDialog dialog = new UnsuccessDialog(this);
             dialog.show();
@@ -201,8 +202,13 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
                 }
             });
         } else {
+            showSwitchRemoteDialog();
             findNextRemoteId();
         }
+    }
+
+    private boolean isTheLastOne() {
+        return mRemoteIds != null && mRemoteIds.size() - 1 == mCurrentIdPosition;
     }
 
     private void findNextRemoteId() {

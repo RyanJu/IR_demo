@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,8 +34,12 @@ import com.kookong.app.data.StbList;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.nio.channels.NotYetBoundException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -105,19 +112,7 @@ public class IRUtils {
     private static String newDeviceID(Context sContext) {
         StringBuilder idBuilder = new StringBuilder("IR");
         TelephonyManager manager = (TelephonyManager) sContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = "";
-        if (manager != null) {
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    imei = manager.getImei();
-                } else {
-                    imei = manager.getDeviceId();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        idBuilder.append(imei);
+        idBuilder.append(getMac(sContext));
 
         UUID uuid = UUID.randomUUID();
         if (uuid != null) {
@@ -125,6 +120,44 @@ public class IRUtils {
         }
 
         return idBuilder.toString();
+    }
+
+    public static String getMac(Context sContext) {
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces != null && interfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = interfaces.nextElement();
+                if (networkInterface != null) {
+                    String displayName = networkInterface.getDisplayName();
+                    if ("wlan0".equals(displayName)) {
+                        //this mac address
+                        byte[] hardwareAddress = networkInterface.getHardwareAddress();
+                        if (hardwareAddress != null && hardwareAddress.length > 0) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (byte b : hardwareAddress) {
+                                stringBuilder.append(String.format("%02x", b & 0xFF)).append(":");
+                            }
+                            if (stringBuilder.length() > 0) {
+                                stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+                            }
+                            return stringBuilder.toString();
+                        }
+                    }
+                }
+            }
+
+            WifiManager wifiManager = (WifiManager) sContext.getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager != null) {
+                WifiInfo connectionInfo = wifiManager.getConnectionInfo();
+                if (connectionInfo != null) {
+                    return connectionInfo.getMacAddress();
+                }
+            }
+
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     /**

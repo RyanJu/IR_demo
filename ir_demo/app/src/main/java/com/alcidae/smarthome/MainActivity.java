@@ -3,6 +3,8 @@ package com.alcidae.smarthome;
 import android.Manifest;
 import android.content.Context;
 import android.hardware.ConsumerIrManager;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +30,12 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         IRUtils.init(this);
         initView();
+
     }
 
     private void initView() {

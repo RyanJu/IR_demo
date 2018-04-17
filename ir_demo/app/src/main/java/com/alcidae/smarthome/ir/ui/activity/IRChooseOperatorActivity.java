@@ -3,11 +3,6 @@ package com.alcidae.smarthome.ir.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,11 +20,10 @@ import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
 import com.alcidae.smarthome.ir.ui.dialog.ChooseAreaDialog;
 import com.alcidae.smarthome.ir.util.LocationUtil;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.SpList;
 
@@ -37,10 +31,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Create By zhurongkun
@@ -96,13 +88,13 @@ public class IRChooseOperatorActivity extends Activity {
             ToastUtil.toast(this, R.string.ir_error_area);
             return;
         }
-        KookongSDK.getAreaId(IRUtils.getProvince(), IRUtils.getCity(), IRUtils.getArea(),new SimpeIRequestResult<Integer>(this){
+        KookongSDK.getAreaId(IRUtils.getProvince(), IRUtils.getCity(), IRUtils.getArea(),new SimpleIRequestResult<Integer>(this){
 
             @Override
             public void onSuccess(String s, Integer integer) {
                 LogUtil.i("getAreaId " + s + " ," + integer);
                 mAreaId = integer;
-                KookongSDK.getOperaters(mAreaId, new SimpeIRequestResult<SpList>(IRChooseOperatorActivity.this) {
+                KookongSDK.getOperaters(mAreaId, new SimpleIRequestResult<SpList>(IRChooseOperatorActivity.this) {
                     @Override
                     public void onSuccess(String s, SpList spList) {
                         if (spList != null && spList.spList != null) {

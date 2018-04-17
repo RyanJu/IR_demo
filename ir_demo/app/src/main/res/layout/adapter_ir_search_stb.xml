@@ -9,7 +9,6 @@
         android:id="@+id/id_adapter_ir_brand_item_tv"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="?selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"

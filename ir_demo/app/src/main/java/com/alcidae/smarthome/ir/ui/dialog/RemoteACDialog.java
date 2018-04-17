@@ -3,24 +3,17 @@ package com.alcidae.smarthome.ir.ui.dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.db.IRBean;
-import com.alcidae.smarthome.ir.util.DisplayUtil;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
-import com.alcidae.smarthome.ir.widget.BaseFloatDialog;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.hzy.tvmao.KKACManagerV2;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.ir.ac.ACConstants;
 import com.hzy.tvmao.ir.ac.ACStateV2;
 import com.hzy.tvmao.utils.LogUtil;
@@ -30,8 +23,6 @@ import com.kookong.app.data.IrDataList;
 import net.tsz.afinal.FinalDb;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 /**
  * Create By zhurongkun
@@ -95,7 +86,7 @@ public class RemoteACDialog extends BaseRemoteDialog implements View.OnClickList
     }
 
     private void loadIrData() {
-        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpeIRequestResult<IrDataList>(getContext()) {
+        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpleIRequestResult<IrDataList>(getContext()) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 if (irDataList != null && irDataList.getIrDataList() != null && !irDataList.getIrDataList().isEmpty()) {

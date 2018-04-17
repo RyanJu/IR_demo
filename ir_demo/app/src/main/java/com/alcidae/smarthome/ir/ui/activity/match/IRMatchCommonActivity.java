@@ -4,17 +4,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
-import com.alcidae.smarthome.ir.util.ToastUtil;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
@@ -53,7 +50,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
 
     private void loadIds() {
         if (mBrand != null) {
-            KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpeIRequestResult<RemoteList>(this) {
+            KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpleIRequestResult<RemoteList>(this) {
                 @Override
                 public void onSuccess(String s, RemoteList remoteList) {
                     if (remoteList != null && remoteList.rids != null && !remoteList.rids.isEmpty()) {
@@ -68,7 +65,7 @@ public abstract class IRMatchCommonActivity extends IRMatchBaseActivity {
 
     private void loadIRData() {
         if (mCurrentIdPosition < mRemoteIds.size()) {
-            KookongSDK.testIRDataById(String.valueOf(mRemoteIds.get(mCurrentIdPosition)), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
+            KookongSDK.testIRDataById(String.valueOf(mRemoteIds.get(mCurrentIdPosition)), mDeviceType, new SimpleIRequestResult<IrDataList>(this) {
 
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {

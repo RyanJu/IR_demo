@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.db.DbUtil;
@@ -104,7 +105,7 @@ public class IRUtils {
                 getSp().edit().putString(IR_DEVICE_KYE, sAppId = newDeviceID(sContext)).apply();
             }
         }
-        boolean result = KookongSDK.init(context.getApplicationContext(), key, sAppId);
+        boolean result = KookongSDK.init(sContext, key, sAppId);
         LogUtil.d("Verify result is " + result);
         KookongSDK.setDebugMode(true);
     }
@@ -447,8 +448,6 @@ public class IRUtils {
     public static String getBrandNameByLocale(BrandList.Brand brand) {
         if (brand == null) return "";
 
-        if (sContext == null) return "";
-
         Locale locale = Locale.getDefault();
         if (Locale.CHINA.getLanguage().equals(locale.getLanguage())) {
             return brand.cname;
@@ -469,7 +468,7 @@ public class IRUtils {
             case 1://
                 break;
         }
-        ToastUtil.toast(context, errorRes);
+        ToastUtil.toast(sContext == null ? context : sContext, errorRes);
     }
 
 

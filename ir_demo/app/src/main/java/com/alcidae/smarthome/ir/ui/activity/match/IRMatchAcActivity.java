@@ -11,7 +11,7 @@ import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.hzy.tvmao.KKACManagerV2;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.ir.Device;
@@ -70,7 +70,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void loadID() {
-        KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpeIRequestResult<RemoteList>(this) {
+        KookongSDK.getAllRemoteIds(mDeviceType, mBrand.brandId, 0, 0, new SimpleIRequestResult<RemoteList>(this) {
             @Override
             public void onSuccess(String s, RemoteList remoteList) {
                 if (remoteList != null && remoteList.rids != null) {
@@ -87,7 +87,7 @@ public class IRMatchAcActivity extends IRMatchBaseActivity {
     }
 
     private void loadIRData() {
-        KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
+        KookongSDK.testIRDataById(String.valueOf(mCurRemoteId), mDeviceType, new SimpleIRequestResult<IrDataList>(this) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 dismissSwitchRemoteDialog();

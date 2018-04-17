@@ -1,6 +1,8 @@
 package com.alcidae.smarthome.ir.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 
 import com.alcidae.smarthome.ir.IRUtils;
 import com.hzy.tvmao.interf.IRequestResult;
@@ -18,11 +20,11 @@ import com.hzy.tvmao.utils.LogUtil;
  * @updateTime 2018/4/8 14:32
  */
 
-public abstract class SimpeIRequestResult<T> implements IRequestResult<T> {
+public abstract class SimpleIRequestResult<T> implements IRequestResult<T> {
 
     private Context context;
 
-    public SimpeIRequestResult(Context context) {
+    public SimpleIRequestResult(Context context) {
         this.context = context;
     }
 

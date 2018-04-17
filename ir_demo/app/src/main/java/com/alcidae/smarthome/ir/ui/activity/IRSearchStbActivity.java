@@ -17,11 +17,9 @@ import android.widget.TextView;
 
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
-import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.StbList;
 
@@ -89,7 +87,7 @@ public class IRSearchStbActivity extends Activity implements SimpleOnItemClickLi
     }
 
     private void doSearch(String word) {
-        KookongSDK.searchSTB(word, mAreaId, new SimpeIRequestResult<StbList>(this) {
+        KookongSDK.searchSTB(word, mAreaId, new SimpleIRequestResult<StbList>(this) {
             @Override
             public void onSuccess(String s, StbList stbList) {
                 LogUtil.i("searchSTB onSuccess ");

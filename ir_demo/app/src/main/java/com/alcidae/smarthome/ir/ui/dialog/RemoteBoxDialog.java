@@ -10,10 +10,8 @@ import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.data.db.IRBean;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.alcidae.smarthome.ir.widget.IrPadView;
-import com.hzy.tvmao.interf.IRequestResult;
-import com.hzy.tvmao.ir.Device;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
 
@@ -43,7 +41,7 @@ public class RemoteBoxDialog extends BaseRemoteDialog implements View.OnClickLis
 
     private void initData() {
         if (mIrBean == null) return;
-        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpeIRequestResult<IrDataList>(getContext()) {
+        IRUtils.getIRData(mIrBean.getDeviceType(), mIrBean.getRemoteId(), new SimpleIRequestResult<IrDataList>(getContext()) {
             @Override
             public void onSuccess(String s, IrDataList irDataList) {
                 mIrData = irDataList.getIrDataList().get(0);

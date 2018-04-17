@@ -12,10 +12,8 @@ import com.alcidae.smarthome.ir.data.EventSendIR;
 import com.alcidae.smarthome.ir.data.IRConst;
 import com.alcidae.smarthome.ir.ui.dialog.InputNameDialog;
 import com.alcidae.smarthome.ir.ui.dialog.UnsuccessDialog;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
-import com.alcidae.smarthome.ir.util.ToastUtil;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
 import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.IrData;
 import com.kookong.app.data.IrDataList;
@@ -73,7 +71,7 @@ public class IRMatchStbIPTVActivity extends IRMatchBaseActivity {
     protected void loadTestData() {
         if (mRemoteIds != null && !mRemoteIds.isEmpty() && mCurrentIdPosition < mRemoteIds.size()) {
             int rid = mRemoteIds.get(mCurrentIdPosition);
-            KookongSDK.testIRDataById(String.valueOf(rid), mDeviceType, new SimpeIRequestResult<IrDataList>(this) {
+            KookongSDK.testIRDataById(String.valueOf(rid), mDeviceType, new SimpleIRequestResult<IrDataList>(this) {
                 @Override
                 public void onSuccess(String s, IrDataList irDataList) {
                     dismissSwitchRemoteDialog();

@@ -22,7 +22,7 @@ import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.IRUtils;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
 import com.hzy.tvmao.KookongSDK;
 import com.hzy.tvmao.utils.LogUtil;
@@ -93,7 +93,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
 
     private void loadBrands() {
         mItems = new ArrayList<>();
-        KookongSDK.getBrandListFromNet(mDeviceType, new SimpeIRequestResult<BrandList>(this) {
+        KookongSDK.getBrandListFromNet(mDeviceType, new SimpleIRequestResult<BrandList>(this) {
             @Override
             public void onSuccess(String s, BrandList brandList) {
                 LogUtil.i("getBrandListFromNet succ: size-->" + brandList.brandList.size());

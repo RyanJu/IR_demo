@@ -8,13 +8,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="@dimen/ir_actionbar_size">
 
         <ImageView
             android:id="@+id/id_dialog_choose_control_back_iv"
             style="@style/TitleBackImage"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_width="@dimen/ir_actionbar_size"
+            android:layout_height="@dimen/ir_actionbar_size" />
 
         <com.alcidae.smarthome.ir.widget.IrTextView
             style="@style/TitleText"

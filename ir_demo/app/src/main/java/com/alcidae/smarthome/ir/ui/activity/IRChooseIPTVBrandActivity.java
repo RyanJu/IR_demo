@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,10 @@ import android.widget.TextView;
 import com.alcidae.smarthome.R;
 import com.alcidae.smarthome.ir.data.EventMatchSuccess;
 import com.alcidae.smarthome.ir.ui.activity.match.IRMatchBaseActivity;
-import com.alcidae.smarthome.ir.util.SimpeIRequestResult;
+import com.alcidae.smarthome.ir.util.SimpleIRequestResult;
 import com.alcidae.smarthome.ir.util.SimpleOnItemClickListener;
-import com.alcidae.smarthome.ir.util.ToastUtil;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.hzy.tvmao.KookongSDK;
-import com.hzy.tvmao.interf.IRequestResult;
-import com.hzy.tvmao.utils.LogUtil;
 import com.kookong.app.data.SpList;
 import com.kookong.app.data.StbList;
 
@@ -88,7 +84,7 @@ public class IRChooseIPTVBrandActivity extends Activity implements View.OnClickL
     }
 
     private void loadAndRefresh() {
-        KookongSDK.getIPTV(mSp.spId, new SimpeIRequestResult<StbList>(this) {
+        KookongSDK.getIPTV(mSp.spId, new SimpleIRequestResult<StbList>(this) {
             @Override
             public void onSuccess(String s, StbList stbList) {
                 mItems = new ArrayList<>();

@@ -59,7 +59,6 @@
         <activity android:name=".ir.ui.activity.IRChooseIPTVBrandActivity" />
         <activity android:name=".ir.ui.activity.match.IRMatchStbIPTVActivity" />
         <activity android:name=".ir.ui.activity.match.IRMatchStbNormalActivity" />
-        <activity android:name=".ir.ui.activity.match.IRMatchCommonActivity" />
         <activity android:name=".ir.ui.activity.match.IRMatchTVActivity" />
         <activity android:name=".ir.ui.activity.match.IRMatchBoxActivtiy" />
         <activity android:name=".ir.ui.activity.IRSearchStbActivity" />

@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.AutoCompleteTextView;
 
+import com.alcidae.smarthome.ir.util.TypefaceUtil;
+
 /**
  * Create By zhurongkun
  *
@@ -34,7 +36,8 @@ public class IrAutoCompleteTextView extends android.support.v7.widget.AppCompatA
     }
 
     private void initTypeFace() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font/pingfang_medium.ttf");
-        setTypeface(tf);
+        Typeface tf = TypefaceUtil.getTypeface(getContext(), "pingfang_medium.ttf");
+        if (tf != null)
+            setTypeface(tf);
     }
 }

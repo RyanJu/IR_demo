@@ -7,6 +7,7 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import java.util.Random;
 

@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import com.alcidae.smarthome.ir.util.TypefaceUtil;
+
 /**
  * Create By zhurongkun
  *
@@ -34,8 +36,9 @@ public class IrEditText extends android.support.v7.widget.AppCompatEditText {
     }
 
     private void initTypeFace() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font/pingfang_medium.ttf");
-        setTypeface(tf);
+        Typeface tf = TypefaceUtil.getTypeface(getContext(), "pingfang_medium.ttf");
+        if (tf != null)
+            setTypeface(tf);
     }
 
 }

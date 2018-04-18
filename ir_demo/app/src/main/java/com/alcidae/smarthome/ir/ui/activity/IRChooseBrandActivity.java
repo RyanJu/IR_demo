@@ -107,13 +107,13 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
     }
 
     private void setAutoComplete(BrandList brandList) {
-        if (brandList != null && brandList.brandList != null) {
-            mSearchBrands.clear();
-            for (BrandList.Brand brand : brandList.brandList) {
-                mSearchBrands.add(new SearchItem(brand, IRUtils.getBrandNameByLocale(brand)));
-            }
-            ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
-        }
+//        if (brandList != null && brandList.brandList != null) {
+//            mSearchBrands.clear();
+//            for (BrandList.Brand brand : brandList.brandList) {
+//                mSearchBrands.add(new SearchItem(brand, IRUtils.getBrandNameByLocale(brand)));
+//            }
+//            ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
+//        }
     }
 
     private void initViews() {
@@ -123,16 +123,7 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
         this.mSearchEt = findViewById(R.id.id_dialog_choose_brand_search_tv);
         mBrandRv.setLayoutManager(new LinearLayoutManager(this));
 
-        mSearchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        final ArrayAdapter searchAdapter = new ArrayAdapter(this, R.layout.adapter_ir_search, R.id.id_adapter_ir_search_tv, mSearchBrands);
+        ArrayAdapter searchAdapter = new ArrayAdapter(this, R.layout.adapter_ir_search, R.id.id_adapter_ir_search_tv, mSearchBrands);
         mSearchEt.setAdapter(searchAdapter);
 
         mSearchEt.setOnItemClickListener(new AdapterView.OnItemClickListener() {

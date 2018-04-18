@@ -40,7 +40,6 @@
             android:paddingLeft="47dp"
             android:textColor="@color/color_777777"
             android:textColorHint="@color/color_dddddd"
-            android:imeOptions="actionGo"
             android:singleLine="true"
             android:inputType="text"
             android:textSize="17sp" />

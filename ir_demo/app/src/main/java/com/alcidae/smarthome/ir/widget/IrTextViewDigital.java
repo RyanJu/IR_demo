@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.alcidae.smarthome.ir.util.TypefaceUtil;
+
 /**
  * Create By zhurongkun
  *
@@ -35,8 +37,9 @@ public class IrTextViewDigital extends android.support.v7.widget.AppCompatTextVi
     }
 
     private void initTypeFace() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "font/digital_regualar.ttf");
-        setTypeface(tf);
+        Typeface tf = TypefaceUtil.getTypeface(getContext(), "digital_regualar.ttf");
+        if (tf != null)
+            setTypeface(tf);
     }
 
 }

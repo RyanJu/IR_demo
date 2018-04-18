@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import com.alcidae.smarthome.ir.util.TypefaceUtil;
+
 /**
  * Create By zhurongkun
  *
@@ -36,8 +38,10 @@ public class IrTextView extends android.support.v7.widget.AppCompatTextView {
 
 
     private void initTypeFace() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(),"font/pingfang_medium.ttf");
-        setTypeface(tf);
+        Typeface tf = TypefaceUtil.getTypeface(getContext(), "pingfang_medium.ttf");
+        if (tf != null) {
+            setTypeface(tf);
+        }
     }
 
 }

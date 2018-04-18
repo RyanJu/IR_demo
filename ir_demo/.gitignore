@@ -8,4 +8,4 @@
 /build
 /captures
 .externalNativeBuild
-DanaleKey.keystore
+app/DanaleKey.keystore

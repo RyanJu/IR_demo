@@ -107,13 +107,13 @@ public class IRChooseBrandActivity extends Activity implements View.OnClickListe
     }
 
     private void setAutoComplete(BrandList brandList) {
-//        if (brandList != null && brandList.brandList != null) {
-//            mSearchBrands.clear();
-//            for (BrandList.Brand brand : brandList.brandList) {
-//                mSearchBrands.add(new SearchItem(brand, IRUtils.getBrandNameByLocale(brand)));
-//            }
-//            ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
-//        }
+        if (brandList != null && brandList.brandList != null) {
+            mSearchBrands.clear();
+            for (BrandList.Brand brand : brandList.brandList) {
+                mSearchBrands.add(new SearchItem(brand, IRUtils.getBrandNameByLocale(brand)));
+            }
+            ((ArrayAdapter) mSearchEt.getAdapter()).notifyDataSetChanged();
+        }
     }
 
     private void initViews() {

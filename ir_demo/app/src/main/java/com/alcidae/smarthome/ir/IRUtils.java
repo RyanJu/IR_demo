@@ -105,9 +105,9 @@ public class IRUtils {
                 getSp().edit().putString(IR_DEVICE_KYE, sAppId = newDeviceID(sContext)).apply();
             }
         }
+        KookongSDK.setDebugMode(false);
         boolean result = KookongSDK.init(sContext, key, sAppId);
         LogUtil.d("Verify result is " + result);
-        KookongSDK.setDebugMode(true);
     }
 
     private static String newDeviceID(Context sContext) {

@@ -155,6 +155,7 @@ public abstract class IRMatchBaseActivity extends Activity implements View.OnCli
                 break;
             case R.id.id_activity_ir_match_test_skip_tv:
                 findViewById(R.id.id_activity_ir_match_test_skip_rl).setVisibility(View.GONE);
+                onClickButtonYes();
                 break;
             case R.id.id_activity_ir_match_test_no_btn:
                 onClickButtonNo();
